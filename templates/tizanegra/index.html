@@ -7,12 +7,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Tiza Negra</title>
-    <link rel="stylesheet" type="text/css" href="{% static "semantic/semantic.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "style/semantic/semantic.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "style/semantic/semantic.min.css" %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{% static "semantic/semantic.min.js" %}"></script>
-
+    <script src="{% static "style/semantic/semantic.min.js" %}"></script>
+    <script src="{% static "style/js/main.js" %}"></script>
 </head>
 <body>
+{% include "usuarios/modal_registro.html" %}
+
 
 <!-- Page Contents -->
 <div class="pusher">
@@ -23,10 +26,10 @@
                 <img src="{% static "images/logo.png" %}" class="logo">
             </div>
             <div class="right item">
-                <a class="ui orange button">Entrar</a>
+                <a id="boton-menu-login" class="ui orange button">Entrar</a>
             </div>
             <div class="item">
-                <a class="ui basic orange button">Registro</a>
+                <a id="boton-menu-registro" class="ui basic orange button">Registro</a>
             </div>
         </div>
     </div>
