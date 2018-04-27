@@ -7,9 +7,9 @@ from docencia.models import Universidad, Asignatura, Profesor
 
 class Estudiante(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    universidad = models.ForeignKey(Universidad, on_delete=models.PROTECT)
-    asignaturas = models.ManyToManyField(Asignatura, null=True)
-    profesores = models.ManyToManyField(Profesor, null=True)
+    universidad = models.ForeignKey(Universidad, on_delete=models.PROTECT, null=True)
+    asignaturas = models.ManyToManyField(Asignatura)
+    profesores = models.ManyToManyField(Profesor)
 
 
 @receiver(post_save, sender=User)
@@ -20,4 +20,5 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    #instance.estudiante.save()
+    pass

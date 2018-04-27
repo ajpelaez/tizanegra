@@ -1,33 +1,14 @@
-<div class="ui tiny modal" id="modal-registro">
+<div class="ui mini modal" id="modal-login">
     <div class="content">
         <form class="ui form">
-            <div class="two fields">
-                <div class="field">
-                    <input type="text" name="nombre" placeholder="Nombre">
-                </div>
-                <div class="field">
-                    <input type="text" name="apellidos" placeholder="Apellidos">
-                </div>
+            {% csrf_token %}
+            <div class="field">
+                <input type="text" name="username" placeholder="Nombre de usuario o email">
             </div>
             <div class="field">
-                <select class="ui search dropdown">
-                    <option value="Granada">Universidad de Granada</option>
-                    <option value="Jaen">Universidad de Córdoba</option>
-                    <option value="Cordoba">Universidad de Jaén</option>
-                </select>
+                <input type="password" name="password" placeholder="Contraseña">
             </div>
-            <div class="field">
-                <input type="text" name="email" placeholder="Email">
-            </div>
-            <div class="two fields">
-                <div class="field">
-                    <input type="password" name="password" placeholder="Contraseña">
-                </div>
-                <div class="field">
-                    <input type="password" name="repeated_password" placeholder="Repetir Contraseña">
-                </div>
-            </div>
-            <button class="ui button fluid orange" type="submit">Completar registro</button>
+            <button class="ui button fluid orange" type="submit">Iniciar sesión</button>
         </form>
     </div>
 </div>

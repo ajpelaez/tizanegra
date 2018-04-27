@@ -1,30 +1,31 @@
 <div class="ui tiny modal" id="modal-registro">
     <div class="content">
-        <form class="ui form">
+        <form id="formulario-registro" class="ui form" method="post">
+            {% csrf_token %}
             <div class="two fields">
                 <div class="field">
-                    <input type="text" name="nombre" placeholder="Nombre">
+                    <input type="text" name="nombre" placeholder="Nombre" required>
                 </div>
                 <div class="field">
-                    <input type="text" name="apellidos" placeholder="Apellidos">
+                    <input type="text" name="apellidos" placeholder="Apellidos" required>
                 </div>
             </div>
             <div class="field">
-                <select class="ui search dropdown">
-                    <option value="Granada">Universidad de Granada</option>
-                    <option value="Jaen">Universidad de Córdoba</option>
-                    <option value="Cordoba">Universidad de Jaén</option>
+                <select id="dropdown-universidades" name="universidad" class="ui search dropdown">
+                    {% for universidad in universidades %}
+                    <option value="{{ universidad.siglas }}">{{ universidad.nombre }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="field">
-                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="email" placeholder="Email" required>
             </div>
             <div class="two fields">
                 <div class="field">
-                    <input type="password" name="password" placeholder="Contraseña">
+                    <input type="password" name="password" placeholder="Contraseña" required>
                 </div>
                 <div class="field">
-                    <input type="password" name="repeated_password" placeholder="Repetir Contraseña">
+                    <input type="password" name="repeated_password" placeholder="Repetir Contraseña" required>
                 </div>
             </div>
             <button class="ui button fluid orange" type="submit">Completar registro</button>

@@ -2,7 +2,8 @@ from django.db import models
 
 
 class Universidad(models.Model):
-    nombre = models.CharField(max_length=100, primary_key=True)
+    siglas = models.CharField(max_length=10, primary_key=True)
+    nombre = models.CharField(max_length=100)
     logo = models.ImageField(upload_to="static/", null=True, blank=True)
     web = models.CharField(max_length=200)
 
