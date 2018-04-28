@@ -1,13 +1,13 @@
 <div class="ui tiny modal" id="modal-registro">
     <div class="content">
-        <form id="formulario-registro" class="ui form" method="post">
+        <form id="formulario-registro" class="ui form" method="post" url="www.google.es">
             {% csrf_token %}
             <div class="two fields">
                 <div class="field">
-                    <input type="text" name="nombre" placeholder="Nombre" required>
+                    <input type="text" name="nombre" placeholder="Nombre" >
                 </div>
                 <div class="field">
-                    <input type="text" name="apellidos" placeholder="Apellidos" required>
+                    <input type="text" name="apellidos" placeholder="Apellidos" >
                 </div>
             </div>
             <div class="field">
@@ -18,14 +18,14 @@
                 </select>
             </div>
             <div class="field">
-                <input type="text" name="email" placeholder="Email" required>
+                <input type="text" name="email" placeholder="Email" >
             </div>
             <div class="two fields">
                 <div class="field">
-                    <input type="password" name="password" placeholder="Contraseña" required>
+                    <input type="password" name="password" placeholder="Contraseña" >
                 </div>
                 <div class="field">
-                    <input type="password" name="repeated_password" placeholder="Repetir Contraseña" required>
+                    <input type="password" name="repeated_password" placeholder="Repetir Contraseña" >
                 </div>
             </div>
             <button class="ui button fluid orange" type="submit">Completar registro</button>
