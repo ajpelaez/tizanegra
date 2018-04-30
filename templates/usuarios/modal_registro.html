@@ -1,34 +1,42 @@
 <div class="ui tiny modal" id="modal-registro">
     <div class="content">
-        <form id="formulario-registro" class="ui form" method="post" url="www.google.es">
+        <form id="formulario-registro" class="ui form" method="post">
             {% csrf_token %}
             <div class="two fields">
-                <div class="field">
+                <div class="field" id="field-nombre">
                     <input type="text" name="nombre" placeholder="Nombre" >
                 </div>
-                <div class="field">
+                <div class="field" id="field-apellidos">
                     <input type="text" name="apellidos" placeholder="Apellidos" >
                 </div>
             </div>
-            <div class="field">
+            <div class="field" id="field-universidad">
                 <select id="dropdown-universidades" name="universidad" class="ui search dropdown">
                     {% for universidad in universidades %}
                     <option value="{{ universidad.siglas }}">{{ universidad.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="field">
+            <div class="field" id="field-email">
                 <input type="text" name="email" placeholder="Email" >
             </div>
             <div class="two fields">
-                <div class="field">
+                <div class="field" id="field-password">
                     <input type="password" name="password" placeholder="Contraseña" >
                 </div>
-                <div class="field">
-                    <input type="password" name="repeated_password" placeholder="Repetir Contraseña" >
+                <div class="field" id="field-repeated-password">
+                    <input type="password" name="repeated-password" placeholder="Repetir Contraseña" >
                 </div>
             </div>
             <button class="ui button fluid orange" type="submit">Completar registro</button>
         </form>
+
+        <div id="register-error-modal" class="ui negative message hidden">
+            <div class="header">
+                Hubo un error con tu registro
+            </div>
+            <p id="register-error-message"></p>
+        </div>
+
     </div>
 </div>

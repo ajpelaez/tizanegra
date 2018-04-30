@@ -2,8 +2,10 @@
 $( document ).ready(function() {
 
     $("#boton-menu-registro").click(function(){
+        resetFormularioRegistro();
         $("#modal-registro").modal('show');
     });
+
     $("#boton-menu-login").click(function(){
         $("#modal-login").modal('show');
     });
@@ -18,8 +20,8 @@ $( document ).ready(function() {
 });
 
 function validar_registro() {
-    alert("Validar registro is working! ");
-    var form = $(this).closest("form");
+    resetFormularioRegistro();
+    var form = $("#formulario-registro");
     var csrftoken = Cookies.get('csrftoken');
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
@@ -36,13 +38,19 @@ function validar_registro() {
         dataType: 'json',
         success: function (data) {
             if (data.result) {
-                alert(data.error_message);
+                alert("hola");
             }
             else{
-                alert(data.error_message);
+                $("#register-error-modal").removeClass("hidden");
+                $("#register-error-message").html(data.error_message);
+                if (typeof data.campo_erroneo !== 'undefined') {
+                    $("#" + String(data.campo_erroneo)).addClass("error");
+                }
+
             }
         },
         error: function(error) {
+            alert("ERROR");
             alert(error);
             console.log(error);
         }
@@ -53,4 +61,9 @@ function validar_registro() {
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+function resetFormularioRegistro(){
+    $("#register-error-modal").addClass("hidden");
+    $(".field").removeClass("error");
 }
