@@ -1,0 +1,16 @@
+body{
+    min-width: 350px;
+    padding-top: 3.5em;
+}
+
+.navbar{
+    min-width: 350px;
+}
+
+.navbar-nav li{
+    display: inline;
+}
+
+.form-inline-nav{
+    flex-flow: row;
+}
