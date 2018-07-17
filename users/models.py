@@ -5,11 +5,11 @@ from django.dispatch import receiver
 from docencia.models import Universidad, Asignatura, Profesor
 
 
-class PerfilEstudiante(models.Model):
+class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    universidad = models.ForeignKey(Universidad, on_delete=models.PROTECT, null=True)
-    asignaturas = models.ManyToManyField(Asignatura)
-    profesores = models.ManyToManyField(Profesor)
+    university = models.ForeignKey(Universidad, on_delete=models.PROTECT, null=True)
+    subjects = models.ManyToManyField(Asignatura)
+    teachers = models.ManyToManyField(Profesor)
 
     def __str__(self):
         return self.user.username
@@ -21,9 +21,9 @@ class PerfilEstudiante(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        PerfilEstudiante.objects.create(user=instance)
+        StudentProfile.objects.create(user=instance)
 
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.perfilestudiante.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#    instance.studentprofile.save()
