@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from docencia.models import Universidad
+from teaching.models import University
 
 
 def index(request):
     context = {
-        "universidades": Universidad.objects.all(),
+        "universidades": University.objects.all(),
     }
 
     return render(request, 'tizanegra/index.html', context)
