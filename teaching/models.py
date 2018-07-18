@@ -11,27 +11,27 @@ class University(models.Model):
         return self.name
 
 
-class Degrees(models.Model):
-    nombre = models.CharField(max_length=100)
-    universidad = models.ForeignKey(University, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.nombre
-
-
-class Subjects(models.Model):
+class Degree(models.Model):
     name = models.CharField(max_length=100)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
-    degrees = models.ManyToManyField(Degrees)
 
     def __str__(self):
         return self.name
 
 
-class Teachers(models.Model):
+class Subject(models.Model):
+    name = models.CharField(max_length=100)
+    university = models.ForeignKey(University, on_delete=models.PROTECT)
+    degrees = models.ManyToManyField(Degree)
+
+    def __str__(self):
+        return self.name
+
+
+class Teacher(models.Model):
     name = models.CharField(max_length=100)
     photo = models.ImageField(upload_to="static/", null=True, blank=True)
-    subjects = models.ManyToManyField(Subjects)
+    subjects = models.ManyToManyField(Subject)
     universities = models.ForeignKey(University, on_delete=models.PROTECT)
     email = models.EmailField(max_length=200)
 
