@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from accounts.models import StudentProfile
 from teaching.models import University
@@ -18,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         student_profile = StudentProfile.objects.get(user=user)
         student_profile.university = university
+        student_profile.save()
         return student_profile
 
     class Meta:

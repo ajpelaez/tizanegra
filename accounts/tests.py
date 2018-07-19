@@ -16,68 +16,28 @@ class AccountsTest(APITestCase):
         self.degree = Degree("Grado en Ingeniería Informática", self.university)
         self.create_url = reverse('signup')
 
-    def test_create_user(self):
-        data = {
+        self.data = {
             'username': 'foobar',
             'email': 'foobar@example.com',
             'password': 'somepassword',
             'university': 'UGR'
         }
 
-        response = self.client.post(self.create_url, data, format='json')
-        user = User.objects.latest('id')
+    def test_when_user_is_created_then_there_are_2_users_in_the_database(self):
+        self.client.post(self.create_url, self.data, format='json')
+        self.assertEqual(User.objects.count(), 2, "Debería haber 2 usuarios en la base de datos")
 
-        # We want to make sure we have two users in the database..
-        self.assertEqual(User.objects.count(), 2)
-        # And that we're returning a 201 created code.
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        # Additionally, we want to return the username and email upon successful creation.
-        self.assertEqual(response.data['username'], data['username'])
-        self.assertEqual(response.data['email'], data['email'])
-        self.assertFalse('password' in response.data)
+    def test_when_user_is_created_then_201_response_is_received(self):
+        response = self.client.post(self.create_url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED, "La respuesta debería devolver el código 201")
+
+    def test_when_user_is_created_then_the_token_key_is_received_in_the_response(self):
+        response = self.client.post(self.create_url, self.data, format='json')
+        user = User.objects.latest('id')
         token = Token.objects.get(user=user)
         self.assertEqual(response.data['token'], token.key)
 
 
-    # def test_create_user_with_short_password(self):
-    #     """
-    #     Ensure user is not created for password lengths less than 8.
-    #     """
-    #     data = {
-    #             'username': 'foobar',
-    #             'email': 'foobarbaz@example.com',
-    #             'password': 'foo'
-    #     }
-    #
-    #     response = self.client.post(self.create_url, data, format='json')
-    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-    #     self.assertEqual(User.objects.count(), 1)
-    #     self.assertEqual(len(response.data['password']), 1)
-    #
-    # def test_create_user_with_no_password(self):
-    #     data = {
-    #             'username': 'foobar',
-    #             'email': 'foobarbaz@example.com',
-    #             'password': ''
-    #     }
-    #
-    #     response = self.client.post(self.create_url, data, format='json')
-    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-    #     self.assertEqual(User.objects.count(), 1)
-    #     self.assertEqual(len(response.data['password']), 1)
-    #
-    # def test_create_user_with_too_long_username(self):
-    #     data = {
-    #         'username': 'foo'*30,
-    #         'email': 'foobarbaz@example.com',
-    #         'password': 'foobar'
-    #     }
-    #
-    #     response = self.client.post(self.create_url, data, format='json')
-    #     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-    #     self.assertEqual(User.objects.count(), 1)
-    #     self.assertEqual(len(response.data['username']), 1)
-    #
     # def test_create_user_with_no_username(self):
     #     data = {
     #             'username': '',

@@ -12,6 +12,7 @@ class University(models.Model):
 
 
 class Degree(models.Model):
+    acronym = models.CharField(max_length=10, default="TEST")
     name = models.CharField(max_length=100)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
 
