@@ -4,6 +4,7 @@ from rest_framework import status
 from accounts.serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
 
 
 class UserCreate(APIView):
@@ -22,5 +23,20 @@ class UserCreate(APIView):
 
 
 @api_view(['GET'])
-def hello_world(request):
-    return Response({"message": "Hello, world!"})
+def check_username_is_valid(request, username):
+    if not check_username_length(username):
+        return Response({'result': False,
+                         'message': 'El nombre de usuario debe tener al menos 4 carácteres'})
+    if not check_username_is_available(username):
+        return Response({'result': False,
+                         'message': 'El nombre de usuario ya esta ocupado'})
+
+    return Response({'result': True})
+
+
+def check_username_length(username):
+    return len(username) > 3
+
+
+def check_username_is_available(username):
+    return not User.objects.filter(username=username).exists()

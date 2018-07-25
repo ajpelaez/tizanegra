@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     path('signup', views.UserCreate.as_view(), name='signup'),
-    path('test', views.hello_world),
+    path('check-username/<str:username>/', views.check_username_is_valid, name='check_username'),
 ]
