@@ -54,6 +54,13 @@ class AccountsTest(APITestCase):
         self.assertFalse(response.data['result'],
                          "El resultado de la respuesta debería ser falso, ya que usuario no es válido")
 
+    def test_when_email_is_already_taken_then_email_is_invalid(self):
+        url = reverse('check_email', kwargs={'email': 'test@example.com'})
+
+        response = self.client.get(url, format='json')
+        self.assertFalse(response.data['result'],
+                         "El resultado de la respuesta debería ser falso, ya que email no es válido")
+
     # def test_create_user_with_no_username(self):
     #     data = {
     #             'username': '',

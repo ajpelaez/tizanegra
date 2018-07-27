@@ -8,19 +8,13 @@
             </div>
             <div class="col-sm-7">
                 <form class="form-signin">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-label-group">
-                                <input type="text" id="inputName" class="form-control" placeholder="Nombre y apellidos" required autofocus>
-                                <label for="inputName">Nombre</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-label-group">
-                                <input type="text" id="inputLastName" class="form-control" placeholder="Apellidos" required autofocus>
-                                <label for="inputLastName">Apellidos</label>
-                            </div>
-                        </div>
+
+                    <div class="form-label-group">
+                        <input type="text" id="inputName" v-model="username" @change="checkUsername"
+                               :class="{'is-invalid' : is_username_invalid, 'is-valid': is_username_valid }"
+                               class="form-control" placeholder="Nombre de usuario" required>
+
+                        <label for="inputName">Nombre de usuario</label>
                     </div>
 
                     <div class="form-group">
@@ -37,7 +31,9 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="text" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                        <input type="text" id="inputEmail" v-model="email" @change="checkEmail"
+                               :class="{'is-invalid' : is_email_invalid, 'is-valid': is_email_valid }"
+                               class="form-control" placeholder="Email" required>
                         <div class="input-group-append">
                             <span class="input-group-text">@correo.ugr.es</span>
                         </div>
@@ -48,13 +44,17 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required autofocus>
+                                <input type="password" id="inputPassword" v-model="password" @change="checkPassword"
+                                       :class="{'is-invalid' : is_password_invalid, 'is-valid': is_password_valid }"
+                                       class="form-control" placeholder="Contraseña" required>
                                 <label for="inputPassword">Clave</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-label-group">
-                                <input type="password" id="inputRepeatedPassword" class="form-control" placeholder="Repetir contraseña" required autofocus>
+                                <input type="password" id="inputRepeatedPassword" v-model="repeated_password" @change="checkPasswordsMatch"
+                                       :class="{'is-invalid' : is_password_invalid, 'is-valid': is_password_valid }"
+                                       class="form-control" placeholder="Repetir contraseña" required>
                                 <label for="inputRepeatedPassword">Repetir clave</label>
                             </div>
                         </div>
@@ -68,11 +68,17 @@
                             </label>
                         </div>
                     </div>
+
+                    <div v-if="signup_form_errors.length" class="alert alert-danger" role="alert">
+                        <ul>
+                            <li v-for="error in signup_form_errors">
+                                [[ error.message ]]
+                            </li>
+                        </ul>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Crear cuenta</button>
-
                 </form>
-
-
             </div>
         </div>
 

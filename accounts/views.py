@@ -5,6 +5,7 @@ from accounts.serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
+import re
 
 
 class UserCreate(APIView):
@@ -24,19 +25,24 @@ class UserCreate(APIView):
 
 @api_view(['GET'])
 def check_username_is_valid(request, username):
-    if not check_username_length(username):
+    if len(username) < 4:
         return Response({'result': False,
                          'message': 'El nombre de usuario debe tener al menos 4 carácteres'})
-    if not check_username_is_available(username):
+
+    if re.match("^[a-zA-Z0-9_.-]+$", username) is None:
         return Response({'result': False,
-                         'message': 'El nombre de usuario ya esta ocupado'})
+                         'message': 'El nombre de usuario no puede incluir alguno de los símbolos utilizados'})
+
+    if User.objects.filter(username=username).exists():
+        return Response({'result': False,
+                         'message': 'Este nombre de usuario ya esta siendo usado'})
 
     return Response({'result': True})
 
 
-def check_username_length(username):
-    return len(username) > 3
-
-
-def check_username_is_available(username):
-    return not User.objects.filter(username=username).exists()
+@api_view(['GET'])
+def check_email_is_valid(request, email):
+    if User.objects.filter(email=email).exists():
+        return Response({'result': False,
+                         'message': 'El email introducido ya esta siendo usado'})
+    return Response({'result': True})
