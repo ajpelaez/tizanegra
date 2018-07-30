@@ -7,33 +7,33 @@
                 <img class="rounded img-fluid" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg">
             </div>
             <div class="col-sm-7">
-                <form class="form-signin">
+                <form class="form-signin" action="user/signup" method="post">
 
                     <div class="form-label-group">
                         <input type="text" id="inputName" v-model="username" @change="checkUsername"
                                :class="{'is-invalid' : is_username_invalid, 'is-valid': is_username_valid }"
-                               class="form-control" placeholder="Nombre de usuario" required>
+                               class="form-control" placeholder="Nombre de usuario" name="username" required>
 
                         <label for="inputName">Nombre de usuario</label>
                     </div>
 
                     <div class="form-group">
-                        <select class="form-control" id="universitySelect">
-                            <option>Universidad de Granada</option>
+                        <select class="form-control" id="universitySelect" name="university">
+                            <option value="UGR">Universidad de Granada</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <select class="form-control" id="degreeSelect">
-                            <option>Grado en Ingeniería Informática</option>
-                            <option>Grado en Ingeniería de Tecnologías de Telecomunicación</option>
+                        <select class="form-control" id="degreeSelect" name="degree">
+                            <option value="GII">Grado en Ingeniería Informática</option>
+                            <option value="GITT">Grado en Ingeniería de Tecnologías de Telecomunicación</option>
                         </select>
                     </div>
 
                     <div class="input-group mb-3">
                         <input type="text" id="inputEmail" v-model="email" @change="checkEmail"
                                :class="{'is-invalid' : is_email_invalid, 'is-valid': is_email_valid }"
-                               class="form-control" placeholder="Email" required>
+                               class="form-control" placeholder="Email" name="email" required>
                         <div class="input-group-append">
                             <span class="input-group-text">@correo.ugr.es</span>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="form-label-group">
                                 <input type="password" id="inputPassword" v-model="password" @change="checkPassword"
                                        :class="{'is-invalid' : is_password_invalid, 'is-valid': is_password_valid }"
-                                       class="form-control" placeholder="Contraseña" required>
+                                       class="form-control" placeholder="Contraseña" name="password" required>
                                 <label for="inputPassword">Clave</label>
                             </div>
                         </div>
