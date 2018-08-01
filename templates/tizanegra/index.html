@@ -6,8 +6,8 @@
             <div class="col-sm-5 pt-3">
                 <img class="rounded img-fluid" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg">
             </div>
-            <div class="col-sm-7">
-                <form class="form-signin" action="user/signup" method="post">
+            <div class="col-sm-6" id="signup_container">
+                <form class="form-signin" action="{% url 'signup' %}" method="post">
 
                     <div class="form-label-group">
                         <input type="text" id="inputName" v-model="username" @change="checkUsername"
@@ -35,8 +35,9 @@
                                :class="{'is-invalid' : is_email_invalid, 'is-valid': is_email_valid }"
                                class="form-control" placeholder="Email" name="email" required>
                         <div class="input-group-append">
-                            <span class="input-group-text">@correo.ugr.es</span>
+                            <span id="emailExtension" class="input-group-text">@correo.ugr.es</span>
                         </div>
+
                     </div>
 
 

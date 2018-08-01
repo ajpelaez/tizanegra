@@ -15,14 +15,19 @@
     <div id="app">
     <header>
         <nav class="navbar fixed-top navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'index' %}">
                 <img src="{% static "images/logo.svg" %}" width="30" height="30" class="d-inline-block align-top" alt="">
                 <span class="d-none d-sm-inline">Tiza Negra</span>
             </a>
 
             <form class="form-inline form-inline-nav">
                 <input class="form-control mr-2 my-1" type="search" placeholder="Buscar..." aria-label="Search">
-                <button class="btn btn-outline-light" type="submit"><i class="fas fa-sign-in-alt"></i> <span class="d-none d-sm-inline">Entrar</span></button>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'panel' %}" class="btn btn-outline-light"><i class="fas fa-user"></i> <span class="d-none d-sm-inline">{{ user.get_username }}</span></a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-light"><i class="fas fa-sign-in-alt"></i> <span class="d-none d-sm-inline">Entrar</span></a>
+                {% endif %}
+
             </form>
 
             </ul>
@@ -30,11 +35,11 @@
 
         </nav>
     </header>
+    <section id="main">
     {% block main_content %}
 
     {% endblock %}
-
-
+    </section>
 
     <footer class="container-fluid bg-dark">
         <p>[[ title ]]</p>

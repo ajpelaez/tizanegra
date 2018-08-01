@@ -14,7 +14,7 @@ var app = new Vue({
     },
     methods:{
         checkUsername(){
-            axios.get('/user/check-username/' + this.username)
+            axios.get("/user/check-username/" + this.username)
             .then(function (response) {
                 app.signup_form_errors = app.signup_form_errors.filter(function(error) { return error.id !== 1 });
 
@@ -28,7 +28,7 @@ var app = new Vue({
         },
 
         checkEmail(){
-            axios.get('/user/check-email/' + this.email)
+            axios.get("/user/check-email/" + this.email + emailExtension.textContent)
             .then(function (response) {
                 app.signup_form_errors = app.signup_form_errors.filter(function(error) { return error.id !== 2 });
 

@@ -5,7 +5,8 @@ class University(models.Model):
     acronym = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100)
     logo = models.ImageField(upload_to="static/", null=True, blank=True)
-    web = models.CharField(max_length=200)
+    web = models.CharField(max_length=100)
+    email_extension = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.name

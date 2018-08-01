@@ -5,6 +5,8 @@ from accounts.serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
+from django.views import View
+from django.shortcuts import render
 import re
 
 
@@ -46,3 +48,10 @@ def check_email_is_valid(request, email):
         return Response({'result': False,
                          'message': 'El email introducido ya esta siendo usado'})
     return Response({'result': True})
+
+
+class UserPanelView(View):
+
+    def get(self, request):
+        context = {'test': 'hi'}
+        return render(request, 'registration/panel.html', context)

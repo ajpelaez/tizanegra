@@ -4,6 +4,8 @@
 }
 
 .form-signin {
+  padding-left: auto;
+  padding-right: auto;
   width: 100%;
   max-width: 600px;
   padding: 15px;
