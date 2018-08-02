@@ -1,8 +1,94 @@
 {% extends 'tizanegra/base.html' %}
-
+{% load static %}
 {% block main_content %}
 
-    {{ test }}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">
+            Últimas valoraciones
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Añadir profesor</a>
+            <a href="#" class="list-group-item list-group-item-action">Añadir asignatura</a>
+            </div>
 
-{# Assumes you setup the password_reset view in your URLconf #}
+            <div class="list-group my-4">
+            <a href="#" class="list-group-item list-group-item-action">
+            Mis valoraciones
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Mi perfil</a>
+            <a href="#" class="list-group-item list-group-item-action">Cambiar contraseña</a>
+            <a href="#" class="list-group-item list-group-item-action">Cerrar sesión</a>
+            </div>
+
+        </div>
+
+        <div class="col-md-9" id="panel-content">
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">Antonio Jesús Peláez Priego</h5>
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Autor: @ajpelaez</li>
+                        <li>Comentario: Me parece un profesor fantástico que se toma sus clases muy enserio</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">Antonio Jesús Peláez Priego</h5>
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Autor: @ajpelaez</li>
+                        <li>Comentario: Me parece un profesor fantástico que se toma sus clases muy enserio</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">Antonio Jesús Peláez Priego</h5>
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Autor: @ajpelaez</li>
+                        <li>Comentario: Me parece un profesor fantástico que se toma sus clases muy enserio</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">Antonio Jesús Peláez Priego</h5>
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Autor: @ajpelaez</li>
+                        <li>Comentario: Me parece un profesor fantástico que se toma sus clases muy enserio</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">Antonio Jesús Peláez Priego</h5>
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Autor: @ajpelaez</li>
+                        <li>Comentario: Me parece un profesor fantástico que se toma sus clases muy enserio</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
 {% endblock %}
