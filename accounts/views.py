@@ -7,22 +7,28 @@ from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.views import View
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
 import re
 
 
 class UserCreate(APIView):
-    def post(self, request, format='json'):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            student_profile = serializer.save()
-            if student_profile:
-                token = Token.objects.create(user=student_profile.user)
-                json = serializer.data
-                json['token'] = token.key
-                json.pop('password')
-                return Response(json, status=status.HTTP_201_CREATED)
+    def post(self, request):
+        try:
+            serializer = UserSerializer(data=request.data)
+            if serializer.is_valid():
+                student_profile = serializer.save()
+                if student_profile:
+                    token = Token.objects.create(user=student_profile.user)
+                    login(request, student_profile.user)
+                    return Response({'result': True})
+        except Exception as e:
+            exception = str(e)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        signup_errors = serializer.errors
+        signup_errors['result'] = False
+        signup_errors['exception'] = exception
+        signup_errors['message'] = 'Ha ocurrido un error con el registro, revisa todos tus datos e inténtalo de nuevo'
+        return Response(signup_errors)
 
 
 @api_view(['GET'])
