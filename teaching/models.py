@@ -11,6 +11,9 @@ class University(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Universities"
+
 
 class Degree(models.Model):
     acronym = models.CharField(max_length=10)
@@ -32,9 +35,9 @@ class Subject(models.Model):
 
 class Teacher(models.Model):
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to="static/", null=True, blank=True)
-    subjects = models.ManyToManyField(Subject)
-    universities = models.ForeignKey(University, on_delete=models.PROTECT)
+    photo = models.ImageField(upload_to="static/teaching/", null=True, blank=True)
+    subjects = models.ManyToManyField(Subject, blank=True)
+    university = models.ForeignKey(University, on_delete=models.PROTECT)
     email = models.EmailField(max_length=200)
 
     def __str__(self):

@@ -1,0 +1,98 @@
+{% extends 'tizanegra/base.html' %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img width="150px"  src="/{{ teacher.photo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">{{ teacher.name }}</h5>
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>{{ teacher.university }}</li>
+                        <li>{{ teacher.email }}</li>
+                        <li>
+                            <span class="badge badge-dark">Simpático</span>
+                            <span class="badge badge-dark">Exigente</span>
+                            <span class="badge badge-dark">Justo</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img width="50px"  src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Anónimo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img width="50px"  src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Anónimo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img width="50px"  src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Anónimo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img width="50px"  src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <ul class="list-unstyled">
+                        <li>Anónimo</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5" class="rating_form">
+            <form id="teacher_rating_form" action="" method="post">
+                {% csrf_token %}
+                <label>Valoración general:</label>
+                <star-rating :increment="0.1" :star-size="30"
+                 :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
+                 :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"
+                 v-model="rating"></star-rating>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="anonymous_rating_checkbox">
+                    <label class="form-check-label" for="anonymous_rating_checkbox">
+                    Valoración anónima
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="rating_comment">Comentario</label>
+                    <textarea class="form-control" id="rating_comment" rows="3"></textarea>
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script src="{% static "style/js/teacher_rating.js" %}"></script>
+
+{% endblock %}

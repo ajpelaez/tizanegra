@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.urls import path
 
 from . import views
@@ -8,6 +7,4 @@ urlpatterns = [
     path('panel/', views.UserPanelView.as_view(), name='panel'),
     path('check-username/<str:username>/', views.check_username_is_valid, name='check_username'),
     path('check-email/<str:email>/', views.check_email_is_valid, name='check_email'),
-
-
 ]

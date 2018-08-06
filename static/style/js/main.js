@@ -1,6 +1,6 @@
-var app = new Vue({
+var signup_app = new Vue({
     delimiters: ['[[', ']]'],
-    el: '#app',
+    el: '#signup_form',
     data: {
         title: 'Welcome to tiza negra',
         username: '',
@@ -18,10 +18,10 @@ var app = new Vue({
         checkUsername(){
             axios.get("/user/check-username/" + this.username)
             .then(function (response) {
-                app.clearPreviousError(1);
+                signup_app.clearPreviousError(1);
 
-                app.is_username_invalid = !response.data['result'];
-                if (app.is_username_invalid) app.signup_form_errors.push({"id" : 1, "message" : response.data['message']});
+                signup_app.is_username_invalid = !response.data['result'];
+                if (signup_app.is_username_invalid) signup_app.signup_form_errors.push({"id" : 1, "message" : response.data['message']});
 
             })
             .catch(function (error) {
@@ -32,10 +32,10 @@ var app = new Vue({
         checkEmail(){
             axios.get("/user/check-email/" + this.email + emailExtension.textContent)
             .then(function (response) {
-                app.clearPreviousError(2);
+                signup_app.clearPreviousError(2);
 
-                app.is_email_invalid = !response.data['result'];
-                if (app.is_email_invalid) app.signup_form_errors.push({"id" : 2, "message" : response.data['message']});
+                signup_app.is_email_invalid = !response.data['result'];
+                if (signup_app.is_email_invalid) signup_app.signup_form_errors.push({"id" : 2, "message" : response.data['message']});
 
             })
             .catch(function (error) {
@@ -44,17 +44,17 @@ var app = new Vue({
         },
 
         checkPassword(){
-            app.clearPreviousError(3);
-            app.clearPreviousError(4);
+            signup_app.clearPreviousError(3);
+            signup_app.clearPreviousError(4);
 
-            if(!app.passwordsMatch()){
-                app.signup_form_errors.push({"id" : 4, "message" : "Las contraseñas introducidas no coinciden"});
+            if(!signup_app.passwordsMatch()){
+                signup_app.signup_form_errors.push({"id" : 4, "message" : "Las contraseñas introducidas no coinciden"});
             }
-            if(!app.isPasswordLongerThan5Chars()){
-                app.signup_form_errors.push({"id" : 3, "message" : "Las contraseña debe tener al menos 6 carácteres"});
+            if(!signup_app.isPasswordLongerThan5Chars()){
+                signup_app.signup_form_errors.push({"id" : 3, "message" : "Las contraseña debe tener al menos 6 carácteres"});
             }
 
-            this.is_password_invalid = !app.passwordsMatch() || !app.isPasswordLongerThan5Chars()
+            this.is_password_invalid = !signup_app.passwordsMatch() || !signup_app.isPasswordLongerThan5Chars()
 
         },
 
@@ -80,12 +80,12 @@ var app = new Vue({
 
             axios.post("/user/signup/", signup_data, headers)
             .then(function (response) {
-                app.clearPreviousError(5);
+                signup_app.clearPreviousError(5);
                 if(response.data['result']){
                     window.location.href = '/user/panel'
                 }
                 else{
-                    app.signup_form_errors.push({"id" : 5, "message" : response.data['message']});
+                    signup_app.signup_form_errors.push({"id" : 5, "message" : response.data['message']});
                     console.log(response);
                 }
 
@@ -96,7 +96,7 @@ var app = new Vue({
         },
 
         clearPreviousError(id){
-            app.signup_form_errors = app.signup_form_errors.filter(function(error) { return error.id !== id });
+            signup_app.signup_form_errors = signup_app.signup_form_errors.filter(function(error) { return error.id !== id });
         }
     },
     computed:{
@@ -118,3 +118,11 @@ var app = new Vue({
 
 
 
+
+var teacher_rating_app = new Vue({
+    delimiters: ['[[', ']]'],
+    el: "#teacher_rating_form",
+    data:{
+        rating: 3
+    }
+});
