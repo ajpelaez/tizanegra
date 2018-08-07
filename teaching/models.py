@@ -25,6 +25,7 @@ class Degree(models.Model):
 
 
 class Subject(models.Model):
+    acronym = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     degrees = models.ManyToManyField(Degree)
