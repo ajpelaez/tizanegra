@@ -18,6 +18,7 @@ class TeacherDetailView(DetailView):
 
 
 class SubjectDetailView(DetailView):
+    degree = None
 
     def get_object(self):
         university_acronym = self.kwargs.get("university").upper()
@@ -25,5 +26,10 @@ class SubjectDetailView(DetailView):
         subject_acronym = self.kwargs.get("subject").upper()
 
         university = University.objects.get(acronym=university_acronym)
-        degree = Degree.objects.get(acronym=degree_acronym)
-        return get_object_or_404(Subject, university=university, degrees=degree , acronym=subject_acronym)
+        self.degree = Degree.objects.get(acronym=degree_acronym)
+        return get_object_or_404(Subject, university=university, degrees=self.degree , acronym=subject_acronym)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['degree'] = self.degree
+        return context

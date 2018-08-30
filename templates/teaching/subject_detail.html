@@ -8,16 +8,17 @@
         <div class="col-md-7">
             <div class="card shadow mb-3">
                 <div class="card-body">
-                    <img width="150px"  src="/{{ teacher.photo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <h5 class="card-title">{{ teacher.name }}</h5>
-                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
+                    <img width="150px"  src="/{{ subject.university.logo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <h5 class="card-title">{{ subject.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ degree.name }}</h6>
+                    <img class="mb-2" src="{% static "images/five-stars.png" %}">
                     <ul class="list-unstyled">
                         <li>{{ teacher.university }}</li>
                         <li>{{ teacher.email }}</li>
                         <li>
-                            <span class="badge badge-dark">Simpático</span>
-                            <span class="badge badge-dark">Exigente</span>
-                            <span class="badge badge-dark">Justo</span>
+                            <span class="badge badge-dark p-2">Divertida</span>
+                            <span class="badge badge-dark p-2">Actual</span>
+                            <span class="badge badge-dark p-2">Muy práctica</span>
                         </li>
                     </ul>
                 </div>
@@ -90,15 +91,15 @@
                 <div class="form-group ml-2">
                     <label for="rating_tags">Escoge las 3 etiquetas que mejor le describan:</label>
                     <ul class="list-inline">
-                        <li class="list-inline-item badge badge-info">Simpático</li>
-                        <li class="list-inline-item badge badge-info">Exigente</li>
-                        <li class="list-inline-item badge badge-info">Justo</li>
-                        <li class="list-inline-item badge badge-info">Pasota</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
+                        <li class="list-inline-item badge badge-info p-2 mb-1">Etiqueta</li>
                     </ul>
                 </div>
 
