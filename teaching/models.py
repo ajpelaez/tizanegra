@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -43,4 +44,28 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.FloatField()
+    anonymity = models.BooleanField()
+    date = models.DateField()
+
+
+class TeacherRating(Rating):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    tags = {"Exigente": 0, "Justo": 0, "Pasota": 0, "Simpático": 0}
+
+
+class SubjectRating(Rating):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    tags = {"Divertida": 0, "Muy práctica": 0, "Actual": 0, "Desfasada": 0, "Muy teórica": 0}
+
+
+class Comment(models.Model):
+    rating = models.ForeignKey(Rating, on_delete=models.CASCADE)
+    text = models.TextField()
+    positive_score = models.IntegerField(default=0)
+    negative_score = models.IntegerField(default=0)
 
