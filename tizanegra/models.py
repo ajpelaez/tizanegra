@@ -1,5 +1,7 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class University(models.Model):
@@ -69,3 +71,13 @@ class Comment(models.Model):
     positive_score = models.IntegerField(default=0)
     negative_score = models.IntegerField(default=0)
 
+
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    university = models.ForeignKey(University, on_delete=models.PROTECT, null=True)
+    degree = models.ForeignKey(Degree, on_delete=models.PROTECT, null=True)
+    subjects = models.ManyToManyField(Subject, blank=True)
+    teachers = models.ManyToManyField(Teacher, blank=True)
+
+    def __str__(self):
+        return self.user.username

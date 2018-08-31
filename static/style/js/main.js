@@ -78,7 +78,7 @@ var signup_app = new Vue({
                 university : this.university
             };
 
-            axios.post("/user/signup/", signup_data, headers)
+            axios.post("/signup/", signup_data, headers)
             .then(function (response) {
                 signup_app.clearPreviousError(5);
                 if(response.data['result']){

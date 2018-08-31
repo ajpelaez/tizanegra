@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from accounts.models import StudentProfile
-from teaching.models import University, Degree
+from .models import University, Degree, Student
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,12 +17,9 @@ class UserSerializer(serializers.ModelSerializer):
                                         validated_data['user']['email'] + university.email_extension,
                                         validated_data['user']['password'])
 
-        student_profile = StudentProfile.objects.get(user=user)
-        student_profile.university = university
-        student_profile.degree = degree
-        student_profile.save()
-        return student_profile
+        student = Student.objects.create(user=user, university=university, degree=degree)
+        return student
 
     class Meta:
-        model = StudentProfile
+        model = Student
         fields = ('id', 'username', 'email', 'password', 'university', 'degree')
