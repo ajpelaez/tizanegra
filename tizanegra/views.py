@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserSerializer
@@ -10,7 +12,8 @@ import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
-from .models import Teacher, University, Degree, Subject
+from .models import Teacher, University, Degree, Subject, SubjectRating, Comment
+from .utils import subject_tags, teacher_tags
 
 
 def index(request):
@@ -73,7 +76,6 @@ class UserPanelView(View):
         return render(request, 'registration/panel.html', context)
 
 
-
 class TeacherDetailView(DetailView):
 
     def get_object(self):
@@ -88,6 +90,7 @@ class TeacherDetailView(DetailView):
 
 
 class SubjectDetailView(DetailView):
+    model = Subject
     degree = None
 
     def get_object(self):
@@ -97,9 +100,38 @@ class SubjectDetailView(DetailView):
 
         university = University.objects.get(acronym=university_acronym)
         self.degree = Degree.objects.get(acronym=degree_acronym)
-        return get_object_or_404(Subject, university=university, degrees=self.degree , acronym=subject_acronym)
+        return get_object_or_404(Subject, university=university, degrees=self.degree, acronym=subject_acronym)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['degree'] = self.degree
+        context['tags'] = subject_tags.keys
+        context['ratings'] = SubjectRating.objects.filter(subject=context['subject'])
         return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            rating_comment = request.POST.get("rating_comment")
+            anonymity = "anonymous_rating" in request.POST
+            degree = Degree.objects.get(acronym=kwargs.get("degree").upper())
+            university = University.objects.get(acronym=kwargs.get("university").upper())
+            subject = Subject.objects.get(university=university, acronym=kwargs.get("subject").upper(), degrees=degree)
+            subject_rating = SubjectRating(user=request.user, score=request.POST["rating"], anonymity=anonymity,
+                                           date=datetime.date.today(), subject=subject)
+            subject_rating.save()
+
+            for tag in subject_tags.keys():
+                if tag in request.POST.keys():
+                    subject_rating.tags.append(tag)
+
+            if rating_comment != "":
+                comment = Comment(rating=subject_rating, text=rating_comment)
+                comment.save()
+
+            context = {"subject": subject, "tags": subject_tags.keys, "degree": degree,
+                       "post_request_result": True, "ratings": SubjectRating.objects.filter(subject=subject)}
+        except:
+            context = {"post_request_result": False}
+
+        return render(request, 'tizanegra/subject_detail.html', context)
+

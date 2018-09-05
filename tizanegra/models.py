@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from .utils import subject_tags, teacher_tags
 
 
 class University(models.Model):
@@ -36,6 +35,30 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+    def get_rating_score(self):
+        from statistics import mean
+        ratings = SubjectRating.objects.filter(subject=self)
+        rating_scores = [rating.score for rating in ratings]
+        return mean(rating_scores)
+
+    # Obtiene las 3 etiquetas más votadas
+    def get_tags(self):
+        most_repeated_tags = []
+        ratings = SubjectRating.objects.filter(subject=self)
+        rating_tags = [rating.tags for rating in ratings]
+        rating_tags_count = dict(subject_tags)
+
+        for tags in rating_tags:
+            for tag in tags:
+                rating_tags_count[tag] += 1
+
+        for i in range(0, 3):
+            tag = max(rating_tags_count, key=rating_tags_count.get)
+            rating_tags_count.pop(tag, None)
+            most_repeated_tags.append(tag)
+
+        return most_repeated_tags
+
 
 class Teacher(models.Model):
     name = models.CharField(max_length=100)
@@ -57,12 +80,12 @@ class Rating(models.Model):
 
 class TeacherRating(Rating):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    tags = {"Exigente": 0, "Justo": 0, "Pasota": 0, "Simpático": 0}
+    tags = []
 
 
 class SubjectRating(Rating):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    tags = {"Divertida": 0, "Muy práctica": 0, "Actual": 0, "Desfasada": 0, "Muy teórica": 0}
+    tags = []
 
 
 class Comment(models.Model):
