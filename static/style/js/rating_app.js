@@ -1,8 +1,8 @@
 Vue.component('star-rating', VueStarRating.default);
 
-var teacher_rating_app = new Vue({
+var rating_app = new Vue({
     delimiters: ['[[', ']]'],
-    el: "#subject_rating",
+    el: "#rating_app",
     data:{
         rating: 3,
         checked_tags: 0

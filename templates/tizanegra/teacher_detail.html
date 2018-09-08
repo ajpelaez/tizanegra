@@ -3,120 +3,75 @@
 
 {% block main_content %}
 
-<div class="container-fluid">
+<div class="container-fluid" id="rating_app">
     <div class="row">
         <div class="col-md-7">
             <div class="card shadow mb-3">
                 <div class="card-body">
-                    <img width="150px"  src="/{{ teacher.photo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <img width="150px" src="/{{ teacher.photo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
                     <h5 class="card-title">{{ teacher.name }}</h5>
-                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
-                    <ul class="list-unstyled">
-                        <li>{{ teacher.university }}</li>
-                        <li>{{ teacher.email }}</li>
-                        <li>
-                            <span class="badge badge-dark">Simpático</span>
-                            <span class="badge badge-dark">Exigente</span>
-                            <span class="badge badge-dark">Justo</span>
-                        </li>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ teacher.university.acronym }} - {{ teacher.email }}</h6>
+
+                    <div class="container">
+                    <star-rating :increment="0.1" :star-size="40" :rating="{{ teacher.get_rating_score }}"
+                     :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
+                     :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                    </star-rating>
+
+                    <ul class="list-unstyled mt-2">
+                            {% for tag in teacher.get_tags %}
+                                <li class="badge badge-dark p-2">{{ tag }}</li>
+                            {% endfor %}
                     </ul>
+                    </div>
                 </div>
             </div>
 
+            {% for rating in ratings %}
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                    <star-rating :increment="0.1" :star-size="15" :rating="{{ rating.score }}" :show-rating="false"
+                     :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
+                     :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                    </star-rating>
 
-
-            <div class="card shadow mb-3">
-                <div class="card-body">
-                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
-                    <ul class="list-unstyled">
-                        <li>Anónimo</li>
-                    </ul>
+                    <span class="clearfix">
+                        {% if rating.anonymity %}Anónimo
+                        {% else %}{{ rating.user }}
+                        {% endif %}
+                     </span>
+                    <p class="mt-2">{{ rating.comment_set.first.text}}</p>
                 </div>
             </div>
-            <div class="card shadow mb-3">
-                <div class="card-body">
-                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
-                    <ul class="list-unstyled">
-                        <li>Anónimo</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card shadow mb-3">
-                <div class="card-body">
-                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
-                    <ul class="list-unstyled">
-                        <li>Anónimo</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card shadow mb-3">
-                <div class="card-body">
-                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <img class="mb-1" src="{% static "images/five-stars.png" %}">
-                    <ul class="list-unstyled">
-                        <li>Anónimo</li>
-                    </ul>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
 
         <div class="col-md-5">
-            <form id="teacher_rating_form" class="rating_form p-3 rounded" action="" method="post">
-                {% csrf_token %}
-                <h2>Crea tu valoración</h2>
-                <star-rating :increment="0.1" :star-size="30"
-                 :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-                 :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"
-                 v-model="rating"></star-rating>
-
-                <div class="form-check my-2 ml-2">
-                    <input class="form-check-input" type="checkbox" value="" id="anonymous_rating_checkbox">
-                    <label class="form-check-label" for="anonymous_rating_checkbox">
-                    Valoración anónima
-                    </label>
+            {% if post_request_result == None %}
+                {% include "tizanegra/teacher_rating_form.html" %}
+            {% elif post_request_result == True %}
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">¡Genial!</h4>
+                    <p>Tu valoración se ha creado con éxito y ha sido añadida a la lista de valoraciones de este profesor.</p>
+                    <hr>
+                    <p class="mb-0">Recuerda que si tu valoración contiene algun tipo de contenido inapropiado será eliminada por nuestros moderadores.</p>
                 </div>
-
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    Si haces tu valoración anónima no se verá tu nombre de usuario en esta una vez sea publicada. Pero recuerda que las valoraciones anónimas son menos importantes respecto a las demás.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+            {% elif post_request_result == False %}
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Ooops!</h4>
+                    <p>Lo siento, ha ocurrido un error al crear tu valoración, inténtalo de nuevo.</p>
+                    <hr>
+                    <p class="mb-0">Si ya lo has intentando varias veces obteniendo el mismo error ponte en contacto con un administrador.</p>
                 </div>
-
-                <div class="form-group ml-2">
-                    <label for="rating_tags">Escoge las 3 etiquetas que mejor le describan:</label>
-                    <ul class="list-inline">
-                        <li class="list-inline-item badge badge-info">Simpático</li>
-                        <li class="list-inline-item badge badge-info">Exigente</li>
-                        <li class="list-inline-item badge badge-info">Justo</li>
-                        <li class="list-inline-item badge badge-info">Pasota</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                        <li class="list-inline-item badge badge-info">Sociable</li>
-                    </ul>
-                </div>
-
-                <div class="form-group ml-2 mt-2">
-                    <label for="rating_comment">Comentario (Opcional):</label>
-                    <textarea class="form-control" id="rating_comment" rows="3"></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary ml-2">Enviar valoración</button>
-
-            </form>
-
+            {% endif %}
         </div>
 
 
     </div>
 </div>
 
-<script src="{% static "style/js/teacher_rating.js" %}"></script>
+<script src="{% static "style/js/rating_app.js" %}"></script>
 
 {% endblock %}

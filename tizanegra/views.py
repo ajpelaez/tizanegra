@@ -12,7 +12,7 @@ import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
-from .models import Teacher, University, Degree, Subject, SubjectRating, Comment
+from .models import Teacher, University, Degree, Subject, SubjectRating, Comment, TeacherRating
 from .utils import subject_tags, teacher_tags
 
 
@@ -77,6 +77,7 @@ class UserPanelView(View):
 
 
 class TeacherDetailView(DetailView):
+    model = Teacher
 
     def get_object(self):
         try:
@@ -87,6 +88,39 @@ class TeacherDetailView(DetailView):
         except ObjectDoesNotExist:
             teacher_id = 0
         return get_object_or_404(Teacher, pk=teacher_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = teacher_tags.keys
+        context['ratings'] = TeacherRating.objects.filter(teacher=context['teacher'])
+        return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            university = University.objects.get(acronym=(kwargs["university"].upper()))
+            teacher = Teacher.objects.filter(email__startswith=kwargs['teacher']).get(university=university)
+
+            rating_comment = request.POST.get("rating_comment")
+            anonymity = "anonymous_rating" in request.POST
+            teacher_rating = TeacherRating(user=request.user, score=request.POST["rating"], anonymity=anonymity,
+                                           date=datetime.date.today(), teacher=teacher)
+            teacher_rating.save()
+
+            for tag in teacher_tags.keys():
+                if tag in request.POST.keys():
+                    teacher_rating.tags.append(tag)
+
+            if rating_comment != "":
+                comment = Comment(rating=teacher_rating, text=rating_comment)
+                comment.save()
+
+            context = {"teacher": teacher, "tags": teacher_tags.keys,
+                       "post_request_result": True, "ratings": TeacherRating.objects.filter(teacher=teacher)}
+
+        except:
+            context = {"post_request_result": False}
+
+        return render(request, 'tizanegra/teacher_detail.html', context)
 
 
 class SubjectDetailView(DetailView):
@@ -134,4 +168,3 @@ class SubjectDetailView(DetailView):
             context = {"post_request_result": False}
 
         return render(request, 'tizanegra/subject_detail.html', context)
-

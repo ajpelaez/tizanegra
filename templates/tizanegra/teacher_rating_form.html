@@ -1,8 +1,7 @@
 {% load static %}
-
-<form class="rating_form p-3 rounded" method="post">
+<form class="rating_form p-3 rounded" action="" method="post">
     {% csrf_token %}
-    <h2>Valora esta asignatura</h2>
+    <h2>Valora este profesor</h2>
 
     <star-rating :increment="0.1" :star-size="30"
      :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
