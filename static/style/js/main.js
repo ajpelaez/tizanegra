@@ -1,6 +1,6 @@
 var signup_app = new Vue({
     delimiters: ['[[', ']]'],
-    el: '#signup_form',
+    el: '#signup-form',
     data: {
         title: 'Welcome to tiza negra',
         username: '',

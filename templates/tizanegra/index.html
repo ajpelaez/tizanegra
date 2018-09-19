@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block main_content %}
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-sm-5 pt-3">
-                <img class="rounded img-fluid" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg">
+    <section class="container-fluid dark-background px-sm-5">
+        <div class="row justify-content-md-center py-2 py-sm-5">
+            <div class="col-md-4 pt-5">
+                <h1>Ahora tú eres el que puntúa</h1>
+                <p>Tizanegra es una plataforma donde queremos la vuelta a la tortilla ofreciendo a los estudiantes la posibilidad de valorar a sus profesores y asignaturas.</p>
             </div>
-            <div class="col-sm-6" id="signup_container">
-                <form id="signup_form" class="form-signin" action="{% url 'signup' %}" method="post" @submit.prevent="manageSignUp">
+            <div class="col-md-7" id="signup-container">
+                <form id="signup-form" class="form-signin" action="{% url 'signup' %}" method="post" @submit.prevent="manageSignUp">
                     {% csrf_token %}
                     <div class="form-label-group">
                         <input type="text" id="inputName" v-model="username" @change="checkUsername"
