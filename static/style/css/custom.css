@@ -2,7 +2,6 @@ body{
     height: 100%;
     min-width: 350px;
     padding-top: 3.5em;
-    /*background-image: url(/static/images/bg.jpg);*/
     background-color: #353942;
 }
 
@@ -12,7 +11,7 @@ body{
 
 #main-content{
     padding-bottom: 1em;
-    background-color: #fff3cd;
+    background-color: white;
 }
 
 .navbar-nav li{
@@ -42,4 +41,13 @@ body{
 
 .text-grey{
     color: lightgrey;
+}
+
+.horizontal-center{
+    padding-left: auto;
+    padding-right: auto;
+}
+
+best-teachers-stars{
+    max-width: 100px;
 }
