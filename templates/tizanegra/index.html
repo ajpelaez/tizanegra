@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block main_content %}
-    <section class="container-fluid dark-background px-sm-5">
-        <div class="row justify-content-md-center py-2 py-sm-5">
+    <section class="container-fluid dark-background px-5">
+        <div class="row justify-content-md-center py-2">
             <div class="col-md-4 pt-5">
                 <h1>Ahora tú eres el que puntúa</h1>
-                <p>Tizanegra es una plataforma donde queremos la vuelta a la tortilla ofreciendo a los estudiantes la posibilidad de valorar a sus profesores y asignaturas.</p>
+                <p class="text-grey">En Tizanegra le damos la vuelta a la tortilla ofreciendo a los estudiantes la posibilidad de valorar a sus profesores y asignaturas.</p>
             </div>
-            <div class="col-md-7" id="signup-container">
+            <div class="col-md-7 my-3 mx-2" id="signup-container">
                 <form id="signup-form" class="form-signin" action="{% url 'signup' %}" method="post" @submit.prevent="manageSignUp">
                     {% csrf_token %}
                     <div class="form-label-group">
@@ -64,9 +64,9 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="form-check">
+                        <div class="form-check ml-1">
                             <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
+                            <label class="form-check-label text-dark" for="gridCheck">
                             Acepto los términos y condiciones de uso
                             </label>
                         </div>
@@ -80,7 +80,7 @@
                         </ul>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" :class="{ 'disabled' : is_form_invalid }" :disabled=is_form_invalid >Crear cuenta</button>
+                    <button type="submit" class="btn btn-primary btn-block" :class="{ 'disabled' : is_form_invalid }" :disabled=is_form_invalid >Crear cuenta</button>
                 </form>
             </div>
         </div>
