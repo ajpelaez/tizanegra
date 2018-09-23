@@ -48,6 +48,6 @@ body{
     padding-right: auto;
 }
 
-best-teachers-stars{
-    max-width: 100px;
+.bg-white{
+    background-color: white !important;
 }

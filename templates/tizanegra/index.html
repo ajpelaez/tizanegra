@@ -5,8 +5,8 @@
     <section class="container-fluid dark-background px-sm-5">
         <div class="row justify-content-center py-2">
             <div class="col-md-4 pt-5">
-                <h1>Ahora tú eres el que puntúa</h1>
-                <p class="text-grey">En Tizanegra le damos la vuelta a la tortilla ofreciendo a los estudiantes la posibilidad de valorar a sus profesores y asignaturas.</p>
+                <h1>Ahora eres tú el que puntúa</h1>
+                <p class="text-grey">En Tizanegra le damos la vuelta a la tortilla ofreciendo a los estudiantes la posibilidad de valorar sus profesores y asignaturas.</p>
             </div>
             <div class="col-md-7 my-3 mx-2" id="signup-container">
                 <form id="signup-form" class="form-signin" action="{% url 'signup' %}" method="post" @submit.prevent="manageSignUp">
@@ -87,24 +87,22 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-6 col-lg-3">
+            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
                 <div class="card border-dark mb-5">
-                    <img class="card-img-top" height="200px" src="{% static "images/teacher1.png" %}" alt="Card image cap">
-                    <div class="card-footer border-dark py-1 m-0 horizontal-center">
-                        <container class="best-teachers-stars">
-                            <star-rating :increment="0.1" :star-size="25" :rating="5"
-                            :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-                            :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                            </star-rating>
-                        </container>
+                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
+                    <div class="card-footer py-1 mx-auto bg-white border-dark">
+                        <star-rating :inline="true" :increment="0.1" :star-size="25" :rating="5"
+                        :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
+                        :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                        </star-rating>
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-6 col-lg-3">
+            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
                 <div class="card border-dark mb-5">
-                    <img class="card-img-top" height="200px" src="{% static "images/teacher2.png" %}" alt="Card image cap">
-                    <div class="card-footer border-dark py-1 m-0">
+                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
+                    <div class="card-footer py-1 mx-auto bg-white border-dark">
                         <star-rating :increment="0.1" :star-size="25" :rating="4.7"
                         :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
                         :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
@@ -113,10 +111,10 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 col-lg-3">
+            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
                 <div class="card border-dark mb-5">
-                    <img class="card-img-top" height="200px" src="{% static "images/teacher3.png" %}" alt="Card image cap">
-                    <div class="card-footer border-dark py-1 m-0">
+                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
+                    <div class="card-footer py-1 mx-auto bg-white border-dark">
                         <star-rating :increment="0.1" :star-size="25" :rating="4"
                         :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
                         :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
@@ -125,10 +123,10 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 col-lg-3">
+            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
                 <div class="card border-dark mb-5">
-                    <img class="card-img-top" height="200px" src="{% static "images/teacher4.png" %}" alt="Card image cap">
-                    <div class="card-footer border-dark py-1 m-0">
+                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
+                    <div class="card-footer py-1 mx-auto bg-white border-dark">
                         <star-rating :increment="0.1" :star-size="25" :rating="4.5"
                         :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
                         :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
@@ -139,29 +137,20 @@
         </div>
     </div>
 
+
     <div class="container my-4">
         <div class="row">
-            <div class="col-sm-6">
-                <img class="rounded img-fluid" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg">
+            <div class="col-sm-7 pt-lg-5 mt-md-5 mt-sm-4">
+                <h1 class="display-4 text-center">Asignaturas</h1>
+                <p class="lead text-center">Valorando y comentando asignaturas que hayas cursado ayudarás a otros estudiantes a decidirse con su matrícula</p>
             </div>
-            <div class="col-sm-6">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <div class="col-sm-5">
+                <img class="rounded img-fluid mx-auto d-block" src="{% static "images/subjects.png" %}">
             </div>
         </div>
 
     </div>
 
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-sm-6">
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            </div>
-            <div class="col-sm-6">
-                <img class="rounded img-fluid" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg">
-            </div>
-        </div>
-
-    </div>
     <script src="{% static "style/js/main.js" %}"></script>
     <script src="{% static "style/js/rating_app.js" %}"></script>
 {% endblock %}

@@ -31,17 +31,13 @@
             </div>
 
             <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Clave" name="password" required>
-                <label for="inputPassword">Clave</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" name="password" required>
+                <label for="inputPassword">Contraseña</label>
             </div>
 
-            <div class="checkbox mb-3">
-                <label>
-                <input type="checkbox" value="remember-me"> Recordar datos
-                </label>
-            </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit" >Entrar</button>
-            <p><a href="{% url 'password_reset' %}">¿Contraseña olvidada?</a></p>
+
+            <p class="mt-2"><a href="{% url 'password_reset' %}">¿Contraseña olvidada?</a></p>
         </form>
     </div>
 </div>
