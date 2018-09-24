@@ -36,10 +36,12 @@ class Subject(models.Model):
         return self.name
 
     def get_rating_score(self):
-        from statistics import mean
         ratings = SubjectRating.objects.filter(subject=self)
-        rating_scores = [rating.score for rating in ratings]
-        return mean(rating_scores)
+        if ratings:
+            from statistics import mean
+            return mean([rating.score for rating in ratings])
+        else:
+            return 0
 
     # Obtiene las 3 etiquetas más votadas
     def get_tags(self):
@@ -71,10 +73,12 @@ class Teacher(models.Model):
         return self.name
 
     def get_rating_score(self):
-        from statistics import mean
         ratings = TeacherRating.objects.filter(teacher=self)
-        rating_scores = [rating.score for rating in ratings]
-        return mean(rating_scores)
+        if ratings:
+            from statistics import mean
+            return mean([rating.score for rating in ratings])
+        else:
+            return 0
 
     # Obtiene las 3 etiquetas más votadas
     def get_tags(self):
