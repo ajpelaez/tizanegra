@@ -133,5 +133,7 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = '/user/panel/'
 django_heroku.settings(locals())
 
-if os.environ.get('DJANGO_DEVELOPMENT', 'true'):
+try:
     from .settings_dev import *
+except ImportError:
+    pass

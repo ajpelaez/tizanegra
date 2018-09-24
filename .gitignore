@@ -3,3 +3,4 @@ venv/
 migrations/
 */migrations
 *.sqlite3
+settings_dev.py
