@@ -1,6 +1,4 @@
 import os
-import django_heroku
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,9 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ot*zh_m0#ojy(8s3tw+cmeusb*kktxvzj!s-o%lad)&p@*(r&s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -85,9 +83,6 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -131,7 +126,3 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = '/user/panel/'
-django_heroku.settings(locals())
-
-if os.environ.get('DJANGO_DEVELOPMENT', 'true'):
-    from .settings_dev import *
