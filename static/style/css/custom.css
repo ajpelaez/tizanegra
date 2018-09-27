@@ -51,3 +51,7 @@ body{
 .bg-white{
     background-color: white !important;
 }
+
+#main-content{
+    min-height: 750px;
+}

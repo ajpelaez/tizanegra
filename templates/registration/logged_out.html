@@ -1,13 +1,14 @@
 {% extends 'tizanegra/base.html' %}
+{% load static %}
 
 {% block main_content %}
 
 <div class="row justify-content-center">
-    <div class="col-sm-6 col-10">
-        <h1>Te has desconectado correctamente.</h1>
+    <div class="col-sm-6 col-10 my-5">
+        <p class="lead text-center">Te has desconectado correctamente serás redireccionado en unos segundos...</p>
     </div>
 </div>
 
+<script src="{% static 'style/js/logout.js' %}"></script>
 
-{# Assumes you setup the password_reset view in your URLconf #}
 {% endblock %}
