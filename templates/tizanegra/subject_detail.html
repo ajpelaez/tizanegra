@@ -38,7 +38,12 @@
                         {% if rating.anonymity %}Anónimo
                         {% else %}{{ rating.user }}
                         {% endif %}
-                     </span>
+                    </span>
+                    <ul class="list-unstyled my-1">
+                        <li class="badge badge-dark p-2 mt-1">{{ rating.tag1 }}</li>
+                        <li class="badge badge-dark p-2 mt-1">{{ rating.tag2 }}</li>
+                        <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
+                    </ul>
                     <p class="mt-2">{{ rating.comment_set.first.text}}</p>
                 </div>
             </div>

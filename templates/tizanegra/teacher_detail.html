@@ -8,21 +8,25 @@
         <div class="col-md-7">
             <div class="card shadow mb-3">
                 <div class="card-body">
-                    <img width="150px" src="/{{ teacher.photo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <h5 class="card-title">{{ teacher.name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ teacher.university.acronym }} - {{ teacher.email }}</h6>
+                    <div class="container-fluid ml-0 pl-0">
+                        <img width="150px" src="/{{ teacher.photo }}" class="mr-2 rounded img-fluid float-sm-left img-thumbnail d-none d-sm-block">
+                        <img src="/{{ teacher.photo }}" class="mr-2 rounded img-fluid float-sm-left img-thumbnail d-sm-none">
+                        <h5 class="card-title text-center text-sm-left mt-3 mt-sm-1">{{ teacher.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted text-center text-sm-left">{{ teacher.university.acronym }} - {{ teacher.email }}</h6>
 
-                    <div class="container">
-                    <star-rating :increment="0.1" :star-size="40" :rating="{{ teacher.get_rating_score }}"
-                     :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-                     :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                    </star-rating>
+                        <div class="row justify-content-center justify-content-sm-start d-sm-block px-5 px-sm-0">
+                            <star-rating :increment="0.1" :star-size="35" :rating="{{ teacher.get_rating_score }}"
+                             :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
+                             :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                            </star-rating>
+                            <ul class="list-unstyled mt-3 mt-sm-1 px-3">
+                                {% for tag in teacher.get_tags %}
+                                    <li class="badge badge-dark p-2 mt-1">{{ tag }}</li>
+                                {% endfor %}
+                            </ul>
 
-                    <ul class="list-unstyled mt-2">
-                            {% for tag in teacher.get_tags %}
-                                <li class="badge badge-dark p-2">{{ tag }}</li>
-                            {% endfor %}
-                    </ul>
+                            <span class="lead px-4 pl-sm-3">www.ugr.es/franpe</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -30,18 +34,29 @@
             {% for rating in ratings %}
             <div class="card shadow mb-3">
                 <div class="card-body">
-                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <star-rating :increment="0.1" :star-size="15" :rating="{{ rating.score }}" :show-rating="false"
-                     :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
-                     :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                    </star-rating>
+                    <div class="row align-content-start">
+                        <div class="col-lg-4">
+                            <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                            <star-rating :increment="0.1" :star-size="15" :rating="{{ rating.score }}" :show-rating="false"
+                             :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
+                             :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                            </star-rating>
 
-                    <span class="clearfix">
-                        {% if rating.anonymity %}Anónimo
-                        {% else %}{{ rating.user }}
-                        {% endif %}
-                     </span>
-                    <p class="mt-2">{{ rating.comment_set.first.text}}</p>
+                            <span class="clearfix">
+                                {% if rating.anonymity %}Anónimo
+                                {% else %}{{ rating.user }}
+                                {% endif %}
+                            </span>
+                            <ul class="list-unstyled my-1">
+                                <li class="badge badge-dark p-2 mt-1">{{ rating.tag1 }}</li>
+                                <li class="badge badge-dark p-2 mt-1">{{ rating.tag2 }}</li>
+                                <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-7">
+                            <p>{{ rating.comment_set.first.text}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% endfor %}

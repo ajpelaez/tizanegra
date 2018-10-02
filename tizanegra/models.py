@@ -47,11 +47,16 @@ class Subject(models.Model):
     def get_tags(self):
         most_repeated_tags = []
         ratings = SubjectRating.objects.filter(subject=self)
-        rating_tags = [rating.tags for rating in ratings]
+        rating_tags = []
+        for rating in ratings:
+            rating_tags.append(rating.tag1)
+            rating_tags.append(rating.tag2)
+            rating_tags.append(rating.tag3)
+
         rating_tags_count = dict(subject_tags)
 
-        for tags in rating_tags:
-            for tag in tags:
+        for tag in rating_tags:
+            if tag:
                 rating_tags_count[tag] += 1
 
         for i in range(0, 3):
@@ -84,11 +89,16 @@ class Teacher(models.Model):
     def get_tags(self):
         most_repeated_tags = []
         ratings = TeacherRating.objects.filter(teacher=self)
-        rating_tags = [rating.tags for rating in ratings]
+        rating_tags = []
+        for rating in ratings:
+            rating_tags.append(rating.tag1)
+            rating_tags.append(rating.tag2)
+            rating_tags.append(rating.tag3)
+
         rating_tags_count = dict(teacher_tags)
 
-        for tags in rating_tags:
-            for tag in tags:
+        for tag in rating_tags:
+            if tag:
                 rating_tags_count[tag] += 1
 
         for i in range(0, 3):
@@ -104,16 +114,25 @@ class Rating(models.Model):
     score = models.FloatField()
     anonymity = models.BooleanField()
     date = models.DateField()
+    tag1 = models.CharField(max_length=20)
+    tag2 = models.CharField(max_length=20)
+    tag3 = models.CharField(max_length=20)
+
+    def add_tag(self, tag):
+        if self.tag1 == '':
+            self.tag1 = tag
+        elif self.tag2 == '':
+            self.tag2 = tag
+        else:
+            self.tag3 = tag
 
 
 class TeacherRating(Rating):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    tags = []
 
 
 class SubjectRating(Rating):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    tags = []
 
 
 class Comment(models.Model):

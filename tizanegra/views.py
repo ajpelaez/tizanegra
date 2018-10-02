@@ -104,11 +104,12 @@ class TeacherDetailView(DetailView):
             anonymity = "anonymous_rating" in request.POST
             teacher_rating = TeacherRating(user=request.user, score=request.POST["rating"], anonymity=anonymity,
                                            date=datetime.date.today(), teacher=teacher)
-            teacher_rating.save()
 
             for tag in teacher_tags.keys():
                 if tag in request.POST.keys():
-                    teacher_rating.tags.append(tag)
+                    teacher_rating.add_tag(tag)
+
+            teacher_rating.save()
 
             if rating_comment != "":
                 comment = Comment(rating=teacher_rating, text=rating_comment)
@@ -152,11 +153,12 @@ class SubjectDetailView(DetailView):
             subject = Subject.objects.get(university=university, acronym=kwargs.get("subject").upper(), degrees=degree)
             subject_rating = SubjectRating(user=request.user, score=request.POST["rating"], anonymity=anonymity,
                                            date=datetime.date.today(), subject=subject)
-            subject_rating.save()
 
             for tag in subject_tags.keys():
                 if tag in request.POST.keys():
-                    subject_rating.tags.append(tag)
+                    subject_rating.add_tag(tag)
+
+            subject_rating.save()
 
             if rating_comment != "":
                 comment = Comment(rating=subject_rating, text=rating_comment)
