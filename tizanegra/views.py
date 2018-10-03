@@ -14,6 +14,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
 from .models import Teacher, University, Degree, Subject, SubjectRating, Comment, TeacherRating
 from .utils import subject_tags, teacher_tags
+from django.core import serializers
 
 
 def index(request):
@@ -67,6 +68,32 @@ def check_email_is_valid(request, email):
         return Response({'result': False,
                          'message': 'El email introducido ya esta siendo usado'})
     return Response({'result': True})
+
+
+@api_view(['GET'])
+def get_teachers_and_subjects(request, name):
+
+    teachers = Teacher.objects.filter(name__contains=name)
+    subjects = Subject.objects.filter(name__contains=name)
+    items = []
+
+    for teacher in teachers:
+        items.append(
+            {"name": teacher.name,
+             "email": teacher.email,
+             "url": teacher.get_url()})
+
+    for subject in subjects:
+        items.append(
+            {"name": subject.name,
+             "url": subject.get_url()}
+        )
+
+    context = {
+        "total_count": len(teachers) + len(subjects),
+        "items": items,
+    }
+    return Response(context)
 
 
 class UserPanelView(View):

@@ -1,3 +1,30 @@
+Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
+
+var search_app =  new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#search-form',
+    data() {
+        return {
+            teachers: [],
+            selected_item: null,
+            query: '',
+            url: ''
+        }
+    },
+    watch: {
+        query(newQuery) {
+            axios.get(`/api/get-teachers-and-subjects/${newQuery}`)
+            .then((res) => {
+                search_app.teachers = res.data.items
+            })
+        },
+        selected_item(){
+            window.location.href = search_app.selected_item.url;
+        }
+    }
+});
+
+
 var signup_app = new Vue({
     delimiters: ['[[', ']]'],
     el: '#signup-form',
@@ -112,17 +139,5 @@ var signup_app = new Vue({
         is_form_invalid(){
             return !(this.is_username_valid && this.is_email_valid && this.is_password_valid)
         }
-    }
-});
-
-
-
-
-
-var teacher_rating_app = new Vue({
-    delimiters: ['[[', ']]'],
-    el: "#teacher_rating_form",
-    data:{
-        rating: 3
     }
 });

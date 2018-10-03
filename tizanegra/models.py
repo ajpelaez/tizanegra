@@ -35,6 +35,10 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+    def get_url(self):
+        return str(self.university.acronym).lower() + "/" + self.degrees.first().acronym.lower() + "/" + \
+               self.acronym.lower()
+
     def get_rating_score(self):
         ratings = SubjectRating.objects.filter(subject=self)
         if ratings:
@@ -76,6 +80,12 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_nick(self):
+        return str(self.email).split("@")[0]
+
+    def get_url(self):
+        return str(self.university.acronym).lower() + "/" + self.get_nick() + "/"
 
     def get_rating_score(self):
         ratings = TeacherRating.objects.filter(teacher=self)
