@@ -18,3 +18,10 @@ var rating_app = new Vue({
         },
     }
 });
+
+$('#reportingModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget);
+  var commentId = button.data('comment-id'); //
+  var modal = $(this);
+  modal.find('.modal-body input').val(commentId)
+});

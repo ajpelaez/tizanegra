@@ -36,7 +36,7 @@ class Subject(models.Model):
         return self.name
 
     def get_url(self):
-        return str(self.university.acronym).lower() + "/" + self.degrees.first().acronym.lower() + "/" + \
+        return str("/" + self.university.acronym).lower() + "/" + self.degrees.first().acronym.lower() + "/" + \
                self.acronym.lower()
 
     def get_rating_score(self):
@@ -85,7 +85,7 @@ class Teacher(models.Model):
         return str(self.email).split("@")[0]
 
     def get_url(self):
-        return str(self.university.acronym).lower() + "/" + self.get_nick() + "/"
+        return str("/" + self.university.acronym).lower() + "/" + self.get_nick() + "/"
 
     def get_rating_score(self):
         ratings = TeacherRating.objects.filter(teacher=self)
@@ -161,3 +161,16 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Report(models.Model):
+    REPORT_STATUS = (
+        ('PENDING', 'Pending'),
+        ('CHECKED', 'Checked'),
+    )
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.ForeignKey(Rating, on_delete=models.CASCADE)
+    reason = models.TextField()
+    status = models.CharField(max_length=7, choices=REPORT_STATUS, default='PENDING')
+    date = models.DateField()

@@ -12,9 +12,10 @@ import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
-from .models import Teacher, University, Degree, Subject, SubjectRating, Comment, TeacherRating
+from .models import Teacher, University, Degree, Subject, SubjectRating, Comment, TeacherRating, Report
 from .utils import subject_tags, teacher_tags
-from django.core import serializers
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 def index(request):
@@ -197,3 +198,18 @@ class SubjectDetailView(DetailView):
             context = {"post_request_result": False}
 
         return render(request, 'tizanegra/subject_detail.html', context)
+
+
+@api_view(['POST'])
+def report_comment(request):
+    try:
+        comment = Comment.objects.get(pk=request.data["comment_id"])
+        report = Report(sender=request.user, rating=comment.rating, date=datetime.date.today(),
+                    reason=request.data["report_reason"])
+
+        report.save()
+        return Response({"message": "Tu reporte se ha enviado corretamente. "
+                                    "Será revisado por un moderador lo antes posible."})
+    except:
+        return Response({"message": "Ha ocurrido un error al enviar tu reporte, intentálo de nuevo o ponte en"
+                                    "contacto con el administrador de la plataforma."})
