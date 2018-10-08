@@ -120,7 +120,7 @@ class TeacherDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tags'] = teacher_tags.keys
-        context['ratings'] = TeacherRating.objects.filter(teacher=context['teacher'])
+        context['ratings'] = TeacherRating.objects.filter(teacher=context['teacher']).order_by('-date', '-pk')
         return context
 
     def post(self, request, *args, **kwargs):
@@ -169,7 +169,7 @@ class SubjectDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['degree'] = self.degree
         context['tags'] = subject_tags.keys
-        context['ratings'] = SubjectRating.objects.filter(subject=context['subject'])
+        context['ratings'] = SubjectRating.objects.filter(subject=context['subject']).order_by('-date', '-pk')
         return context
 
     def post(self, request, *args, **kwargs):

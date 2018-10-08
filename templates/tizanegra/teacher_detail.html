@@ -50,10 +50,11 @@
                         <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
                     </ul>
                     {% if rating.comment.text %}
-                        <p>{{ rating.comment.text }}</p>
+                        <p class="mt-3">{{ rating.comment.text }}</p>
                         <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
                             data-target="#reportingModal" data-comment-id="{{ rating.comment.pk }}">
-                            <i class="fas fa-exclamation-circle mr-1"></i>Reportar comentario</button>
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            <span class="d-none d-sm-inline">Reportar comentario</span></button>
                     {% endif %}
                 </div>
             </div>
