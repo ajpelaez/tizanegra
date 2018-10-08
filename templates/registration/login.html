@@ -1,45 +1,44 @@
 {% extends 'tizanegra/base.html' %}
 
 {% block main_content %}
-
-<div class="row justify-content-center">
-    <div class="col-sm-6 col-10">
-        {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
-
-        {% if next %}
-            {% if user.is_authenticated %}
-            <p>Your account doesn't have access to this page. To proceed,
-            please login with an account that has access.</p>
-            {% else %}
-            <p>Please login to see this page.</p>
+    <div class="row justify-content-center mx-0">
+        <div class="col-sm-6 col-10">
+            {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
             {% endif %}
-        {% endif %}
+
+            {% if next %}
+                {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+                {% else %}
+                <p>Please login to see this page.</p>
+                {% endif %}
+            {% endif %}
 
 
-        <form class="form-signin my-5 " method="post" action="{% url 'login' %}">
-            {% csrf_token %}
+            <form class="form-signin my-5 " method="post" action="{% url 'login' %}">
+                {% csrf_token %}
 
-            <div class="text-center mb-4">
-                <h1 class="h3 mb-3 font-weight-normal">Inicia sesión</h1>
-            </div>
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">Inicia sesión</h1>
+                </div>
 
-            <div class="form-label-group">
-                <input type="text" id="inputUsername" class="form-control" placeholder="Nombre de usuario" name="username" required autofocus>
-                <label for="inputUsername">Nombre de usuario</label>
-            </div>
+                <div class="form-label-group">
+                    <input type="text" id="inputUsername" class="form-control" placeholder="Nombre de usuario" name="username" required autofocus>
+                    <label for="inputUsername">Nombre de usuario</label>
+                </div>
 
-            <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" name="password" required>
-                <label for="inputPassword">Contraseña</label>
-            </div>
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" name="password" required>
+                    <label for="inputPassword">Contraseña</label>
+                </div>
 
-            <button class="btn btn-lg btn-success btn-block" type="submit" >Entrar</button>
+                <button class="btn btn-lg btn-success btn-block" type="submit" >Entrar</button>
 
-            <p class="mt-2"><a href="{% url 'password_reset' %}">¿Contraseña olvidada?</a></p>
-        </form>
+                <p class="mt-2"><a href="{% url 'password_reset' %}">¿Contraseña olvidada?</a></p>
+            </form>
+        </div>
     </div>
-</div>
 
 {% endblock %}
