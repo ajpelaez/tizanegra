@@ -31,6 +31,7 @@ class Subject(models.Model):
     name = models.CharField(max_length=100)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     degrees = models.ManyToManyField(Degree)
+    website = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
@@ -77,6 +78,7 @@ class Teacher(models.Model):
     subjects = models.ManyToManyField(Subject, blank=True)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     email = models.EmailField(max_length=200)
+    website = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
@@ -136,6 +138,9 @@ class Rating(models.Model):
         else:
             self.tag3 = tag
 
+    def __str__(self):
+        return self.user.username + "'s rating"
+
 
 class TeacherRating(Rating):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
@@ -146,10 +151,13 @@ class SubjectRating(Rating):
 
 
 class Comment(models.Model):
-    rating = models.ForeignKey(Rating, on_delete=models.CASCADE)
+    rating = models.OneToOneField(Rating, on_delete=models.CASCADE)
     text = models.TextField()
     positive_score = models.IntegerField(default=0)
     negative_score = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text
 
 
 class Student(models.Model):
@@ -170,7 +178,10 @@ class Report(models.Model):
     )
 
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.ForeignKey(Rating, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     reason = models.TextField()
     status = models.CharField(max_length=7, choices=REPORT_STATUS, default='PENDING')
     date = models.DateField()
+
+    def __str__(self):
+        return self.sender.username + "'s report"

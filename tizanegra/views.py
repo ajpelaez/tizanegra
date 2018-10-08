@@ -204,8 +204,8 @@ class SubjectDetailView(DetailView):
 def report_comment(request):
     try:
         comment = Comment.objects.get(pk=request.data["comment_id"])
-        report = Report(sender=request.user, rating=comment.rating, date=datetime.date.today(),
-                    reason=request.data["report_reason"])
+        report = Report(sender=request.user, comment=comment, date=datetime.date.today(),
+                        reason=request.data["report_reason"])
 
         report.save()
         return Response({"message": "Tu reporte se ha enviado corretamente. "

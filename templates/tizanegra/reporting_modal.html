@@ -1,0 +1,40 @@
+{% load static %}
+
+<div class="modal fade" id="reportingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ratingModalLabel">Reportar comentario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="report-form" method="post" action="{% url 'report_comment' %}" @submit.prevent="sendReport">
+
+                <div class="modal-body" v-if="form_is_not_sent">
+                    <input type="hidden" class="form-control" id="comment-id" value="0">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Motivo de reporte:</label>
+                        <textarea v-model="report_reason" class="form-control" id="message-text"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-body" v-else>
+                    <p>[[ received_message ]]</p>
+                </div>
+                <div class="modal-footer" v-if="form_is_not_sent">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-danger"><i class="fas fa-exclamation-circle mr-1"></i>
+                        Reportar</button>
+                </div>
+                <div class="modal-footer" v-else>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" v-on:click="resetApp">Cerrar</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="{% static "style/js/report_app.js" %}"></script>

@@ -22,6 +22,7 @@
                             <li class="badge badge-dark p-2">{{ tag }}</li>
                         {% endfor %}
                     </ul>
+                    <a class="lead px-4 pl-sm-3 text-dark" href="http://{{ subject.website }}" target="_blank">{{ subject.website }}</a>
                 </div>
             </div>
 
@@ -44,7 +45,12 @@
                         <li class="badge badge-dark p-2 mt-1">{{ rating.tag2 }}</li>
                         <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
                     </ul>
-                    <p class="mt-2">{{ rating.comment_set.first.text}}</p>
+                    {% if rating.comment.text %}
+                        <p>{{ rating.comment.text }}</p>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                            data-target="#reportingModal" data-comment-id="{{ rating.comment.pk }}">
+                            <i class="fas fa-exclamation-circle mr-1"></i>Reportar comentario</button>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -73,6 +79,8 @@
 
     </div>
 </div>
+
+{% include "tizanegra/reporting_modal.html" %}
 
 <script src="{% static "style/js/rating_app.js" %}"></script>
 {% endblock %}
