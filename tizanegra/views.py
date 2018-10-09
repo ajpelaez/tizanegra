@@ -217,14 +217,15 @@ def report_comment(request):
 
 @api_view(['POST'])
 def rate_comment(request):
+    comment = Comment.objects.get(pk=request.data["comment_id"])
+    score = request.data["is_positive"]
     try:
-        comment = Comment.objects.get(pk=request.data["comment_id"])
-        score = request.data["is_positive"]
         comment_score = CommentScore.objects.get(comment=comment, user=request.user)
 
         score_changed = comment_score.is_positive != score
-        comment_score.is_positive = score
-        comment_score.save()
+        if score_changed:
+            comment_score.is_positive = score
+            comment_score.save()
         return Response({"result": True, "created": False, "changed": score_changed})
 
     except CommentScore.DoesNotExist:

@@ -63,7 +63,7 @@
                     <button type="button" class="btn btn-danger btn-sm font-weight-bold"
                         v-on:click="addNegativeScore({{ rating.comment.pk }})">
                         <i class="far fa-frown mr-1"></i>
-                        <span id="negative-counter-{{ rating.comment.pk }}">{{ rating.comment.positive_score }}</span>
+                        <span id="negative-counter-{{ rating.comment.pk }}">{{ rating.comment.negative_score }}</span>
                     </button>
 
                     <button type="button" class="btn btn-outline-info btn-sm ml-2" data-toggle="modal"
