@@ -153,11 +153,24 @@ class SubjectRating(Rating):
 class Comment(models.Model):
     rating = models.OneToOneField(Rating, on_delete=models.CASCADE)
     text = models.TextField()
-    positive_score = models.IntegerField(default=0)
-    negative_score = models.IntegerField(default=0)
+
+    def positive_score(self):
+        return CommentScore.objects.filter(comment=self, is_positive=True).count()
+
+    def negative_score(self):
+        return CommentScore.objects.filter(comment=self, is_positive=False).count()
 
     def __str__(self):
         return self.text
+
+
+class CommentScore(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    is_positive = models.BooleanField()
+
+    class Meta:
+        unique_together = ('user', 'comment')
 
 
 class Student(models.Model):

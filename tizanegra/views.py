@@ -5,17 +5,15 @@ from rest_framework.response import Response
 from .serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
-from django.contrib.auth.models import User
 from django.views import View
 from django.contrib.auth import login
 import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
-from .models import Teacher, University, Degree, Subject, SubjectRating, Comment, TeacherRating, Report
+from .models import *
 from .utils import subject_tags, teacher_tags
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+
 
 
 def index(request):
@@ -144,7 +142,8 @@ class TeacherDetailView(DetailView):
                 comment.save()
 
             context = {"teacher": teacher, "tags": teacher_tags.keys,
-                       "post_request_result": True, "ratings": TeacherRating.objects.filter(teacher=teacher)}
+                       "post_request_result": True,
+                       "ratings": TeacherRating.objects.filter(teacher=teacher).order_by('-date', '-pk')}
 
         except:
             context = {"post_request_result": False}
@@ -193,7 +192,8 @@ class SubjectDetailView(DetailView):
                 comment.save()
 
             context = {"subject": subject, "tags": subject_tags.keys, "degree": degree,
-                       "post_request_result": True, "ratings": SubjectRating.objects.filter(subject=subject)}
+                       "post_request_result": True,
+                       "ratings": SubjectRating.objects.filter(subject=subject).order_by('-date', '-pk')}
         except:
             context = {"post_request_result": False}
 
@@ -213,3 +213,24 @@ def report_comment(request):
     except:
         return Response({"message": "Ha ocurrido un error al enviar tu reporte, intentálo de nuevo o ponte en"
                                     "contacto con el administrador de la plataforma."})
+
+
+@api_view(['POST'])
+def rate_comment(request):
+    try:
+        comment = Comment.objects.get(pk=request.data["comment_id"])
+        score = request.data["is_positive"]
+        comment_score = CommentScore.objects.get(comment=comment, user=request.user)
+
+        score_changed = comment_score.is_positive != score
+        comment_score.is_positive = score
+        comment_score.save()
+        return Response({"result": True, "created": False, "changed": score_changed})
+
+    except CommentScore.DoesNotExist:
+        comment_score = CommentScore(comment=comment, user=request.user, is_positive=score)
+        comment_score.save()
+        return Response({"result": True, "created": True})
+
+    except:
+        return Response({"result": False})

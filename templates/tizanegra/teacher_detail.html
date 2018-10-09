@@ -44,19 +44,36 @@
                         {% else %}{{ rating.user }}
                         {% endif %}
                     </span>
-                    <ul class="list-unstyled my-1">
+                    <ul class="list-unstyled mt-1 mb-0">
                         <li class="badge badge-dark p-2 mt-1">{{ rating.tag1 }}</li>
                         <li class="badge badge-dark p-2 mt-1">{{ rating.tag2 }}</li>
                         <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
                     </ul>
-                    {% if rating.comment.text %}
-                        <p class="mt-3">{{ rating.comment.text }}</p>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
-                            data-target="#reportingModal" data-comment-id="{{ rating.comment.pk }}">
-                            <i class="fas fa-exclamation-circle mr-1"></i>
-                            <span class="d-none d-sm-inline">Reportar comentario</span></button>
-                    {% endif %}
                 </div>
+
+                {% if rating.comment.text %}
+                <div class="card-footer rating-comment">
+                    <p>{{ rating.comment.text }}</p>
+
+                    <button type="button" class="btn btn-success btn-sm font-weight-bold"
+                        v-on:click="addPositiveScore({{ rating.comment.pk }})">
+                        <i class="far fa-smile mr-1"></i>
+                        <span id="positive-counter-{{ rating.comment.pk }}">{{ rating.comment.positive_score }}</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm font-weight-bold"
+                        v-on:click="addNegativeScore({{ rating.comment.pk }})">
+                        <i class="far fa-frown mr-1"></i>
+                        <span id="negative-counter-{{ rating.comment.pk }}">{{ rating.comment.positive_score }}</span>
+                    </button>
+
+                    <button type="button" class="btn btn-outline-info btn-sm ml-2" data-toggle="modal"
+                        data-target="#reportingModal" data-comment-id="{{ rating.comment.pk }}">
+                        <i class="fas fa-exclamation-circle mr-1"></i>
+                        <span class="d-none d-sm-inline">Reportar comentario</span>
+                    </button>
+                </div>
+                {% endif %}
+
             </div>
             {% endfor %}
 

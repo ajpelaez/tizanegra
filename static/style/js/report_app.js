@@ -34,7 +34,7 @@ var report_app =  new Vue({
             axios.post("/api/report-comment/", report_data)
             .then(function (response) {
                 report_app.form_is_not_sent = false;
-                console.log(response.data)
+                console.log(response.data);
                 report_app.received_message = response.data['message'];
             })
             .catch(function (error) {
