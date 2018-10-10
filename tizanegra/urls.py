@@ -16,8 +16,8 @@ urlpatterns = [
     path('api/report-comment/', views.report_comment, name='report_comment'),
     path('api/rate-comment/', views.rate_comment, name='rate_comment'),
 
-    path('<str:university>/<str:teacher>/', views.TeacherDetailView.as_view(), name='teacher-detail'),
     path('<str:university>/<str:degree>/<str:subject>/', views.SubjectDetailView.as_view(), name='subject-detail'),
+    path('<str:university>/<str:teacher>/', views.TeacherDetailView.as_view(), name='teacher-detail'),
 
     path('', views.index, name='index'),
 ]
