@@ -101,6 +101,10 @@ class Teacher(models.Model):
     def get_tags(self):
         most_repeated_tags = []
         ratings = TeacherRating.objects.filter(teacher=self)
+
+        if not ratings:
+            return ["Sin", "etiquetas", ""]
+
         rating_tags = []
         for rating in ratings:
             rating_tags.append(rating.tag1)
@@ -140,6 +144,9 @@ class Rating(models.Model):
 
     def __str__(self):
         return self.user.username + "'s rating"
+
+    class Meta:
+        abstract = True
 
 
 class TeacherRating(Rating):

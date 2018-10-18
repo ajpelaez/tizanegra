@@ -15,7 +15,6 @@ from .models import *
 from .utils import subject_tags, teacher_tags
 
 
-
 def index(request):
     context = {
         "universidades": University.objects.all(),
@@ -118,6 +117,7 @@ class TeacherDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tags'] = teacher_tags.keys
+        context['rated'] = TeacherRating.objects.filter(teacher=context['teacher'], user=self.request.user).exists()
         context['ratings'] = TeacherRating.objects.filter(teacher=context['teacher']).order_by('-date', '-pk')
         return context
 
@@ -143,8 +143,8 @@ class TeacherDetailView(DetailView):
 
             context = {"teacher": teacher, "tags": teacher_tags.keys,
                        "post_request_result": True,
+                       "rated": TeacherRating.objects.filter(teacher=teacher, user=self.request.user).exists(),
                        "ratings": TeacherRating.objects.filter(teacher=teacher).order_by('-date', '-pk')}
-
         except:
             context = {"post_request_result": False}
 
