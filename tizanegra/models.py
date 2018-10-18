@@ -145,9 +145,6 @@ class Rating(models.Model):
     def __str__(self):
         return self.user.username + "'s rating"
 
-    class Meta:
-        abstract = True
-
 
 class TeacherRating(Rating):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)

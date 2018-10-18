@@ -168,6 +168,7 @@ class SubjectDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['degree'] = self.degree
         context['tags'] = subject_tags.keys
+        context['rated'] = SubjectRating.objects.filter(subject=context['subject'], user=self.request.user).exists()
         context['ratings'] = SubjectRating.objects.filter(subject=context['subject']).order_by('-date', '-pk')
         return context
 
@@ -193,6 +194,7 @@ class SubjectDetailView(DetailView):
 
             context = {"subject": subject, "tags": subject_tags.keys, "degree": degree,
                        "post_request_result": True,
+                       "rated": SubjectRating.objects.filter(subject=subject, user=self.request.user).exists(),
                        "ratings": SubjectRating.objects.filter(subject=subject).order_by('-date', '-pk')}
         except:
             context = {"post_request_result": False}

@@ -46,22 +46,22 @@
             <div class="card shadow mb-3">
                 <div class="card-body">
                     <div class="float-left">
-                    <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
-                    <star-rating :increment="0.1" :star-size="15" :rating="{{ rating.score }}" :show-rating="false"
-                     :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
-                     :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                    </star-rating>
+                        <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                        <star-rating :increment="0.1" :star-size="15" :rating="{{ rating.score }}" :show-rating="false"
+                         :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
+                         :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                        </star-rating>
 
-                    <span class="clearfix">
-                        {% if rating.anonymity %}Anónimo
-                        {% else %}{{ rating.user }}
-                        {% endif %}
-                    </span>
-                    <ul class="list-unstyled mt-1 mb-0">
-                        <li class="badge badge-dark p-2 mt-1">{{ rating.tag1 }}</li>
-                        <li class="badge badge-dark p-2 mt-1">{{ rating.tag2 }}</li>
-                        <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
-                    </ul>
+                        <span class="clearfix">
+                            {% if rating.anonymity %}Anónimo
+                            {% else %}{{ rating.user }}
+                            {% endif %}
+                        </span>
+                        <ul class="list-unstyled mt-1 mb-0">
+                            <li class="badge badge-dark p-2 mt-1">{{ rating.tag1 }}</li>
+                            <li class="badge badge-dark p-2 mt-1">{{ rating.tag2 }}</li>
+                            <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
+                        </ul>
                     </div>
 
                     <div class="float-right">

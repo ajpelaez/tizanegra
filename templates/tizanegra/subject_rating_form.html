@@ -1,48 +1,73 @@
 {% load static %}
 
-<form class="rating-form p-3 rounded" method="post">
+{% if user.is_authenticated and not rated%}
+
+<form class="rating-form rounded card shadow" action="" method="post">
     {% csrf_token %}
-    <h2>Valora esta asignatura</h2>
+    <div class="card-header">
+        <h2>Valora esta asignatura</h2>
 
-    <star-rating :increment="0.1" :star-size="30"
-     :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-     :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"
-     v-model="rating"></star-rating>
-
-    <input type="hidden" name="rating" v-model="rating">
-
-    <div class="form-check my-2 ml-2">
-        <input class="form-check-input" type="checkbox" name="anonymous_rating" id="anonymous_rating_checkbox">
-        <label class="form-check-label" for="anonymous_rating_checkbox">
-        Valoración anónima
-        </label>
+        <star-rating :increment="0.1" :star-size="30"
+         :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
+         :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"
+         v-model="rating"></star-rating>
     </div>
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        Si haces tu valoración anónima no se verá tu nombre de usuario en esta una vez sea publicada. Pero recuerda que las valoraciones anónimas son menos importantes respecto a las demás.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <div class="card-body">
 
-    <div class="form-group ml-2">
-        <label for="rating_tags">Escoge las 3 etiquetas que mejor la describan:</label>
-        <ul class="list-inline">
-            {% for tag in tags %}
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="{{ tag }}"
-                    v-on:click="select_tag">
-                    <label class="form-check-label">{{ tag }}</label>
-                </div>
-            {% endfor %}
-        </ul>
-    </div>
+        <input type="hidden" name="rating" v-model="rating">
 
-    <div class="form-group ml-2 mt-2">
-        <label for="rating_comment">Comentario (Opcional):</label>
-        <textarea class="form-control" name="rating_comment" rows="3"></textarea>
-    </div>
+        <div class="form-check my-2">
+            <input class="form-check-input" type="checkbox" name="anonymous_rating" id="anonymous_rating_checkbox">
+            <label class="form-check-label" for="anonymous_rating_checkbox">
+            Valoración anónima
+            </label>
+        </div>
 
-    <button type="submit" class="btn btn-primary ml-2">Crear valoración</button>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Si haces tu valoración anónima no se verá tu nombre de usuario en esta una vez sea publicada. Pero recuerda que las valoraciones anónimas son menos importantes respecto a las demás.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label for="rating_tags">Escoge las 3 etiquetas que mejor la describan:</label>
+            <ul class="list-inline">
+                {% for tag in tags %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="{{ tag }}"
+                        v-on:click="select_tag">
+                        <label class="form-check-label">{{ tag }}</label>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="rating_comment">Comentario (Opcional):</label>
+            <textarea class="form-control" name="rating_comment" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block">Crear valoración</button>
+    </div>
 
 </form>
+
+{% elif rated %}
+    <div class="alert alert-info" role="info">
+        <h4 class="alert-heading">Asignatura ya valorada</h4>
+        <p>Ya has valorado a esta asignatura una vez y solo permitimos valorar la misma asignatura una única vez a cada estudiante.<br>
+        <hr>
+        <p class="mb-0">Si lo deseas, puedes consultar tu valoración en tu panel de usuario.</p>
+        <a href="{% url 'index' %}">Mi valoración</a><br>
+    </div>
+{% else %}
+    <div class="alert alert-info" role="info">
+        <p>Debes estar conectado para poder valorar asignaturas.<br>
+        <a href="{% url 'login' %}">Iniciar sesión</a><br>
+        <hr>
+        <p class="mb-0">Si aún no tienes cuenta, create una ya y empieza a formar parte de Tizanegra.</p>
+        <a href="{% url 'index' %}">Crear cuenta</a><br>
+    </div>
+{% endif %}
