@@ -20,7 +20,7 @@ def index(request):
     teachers = Teacher.objects.all()
     best_teachers = []
 
-    for i in range(0, 4):
+    for i in range(0, min(len(teachers), 4)):
         teacher = max(teachers, key=lambda t: t.get_rating_score())
         teachers = teachers.exclude(id=teacher.id)
         best_teachers.append(teacher)
