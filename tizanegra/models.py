@@ -143,7 +143,7 @@ class Rating(models.Model):
             self.tag3 = tag
 
     def __str__(self):
-        return self.user.username + "'s rating"
+        return "#" + str(self.pk) + " " + self.user.username + "'s rating"
 
 
 class TeacherRating(Rating):
@@ -202,3 +202,6 @@ class Report(models.Model):
 
     def __str__(self):
         return self.sender.username + "'s report"
+
+    def rating(self):
+        return self.comment.rating

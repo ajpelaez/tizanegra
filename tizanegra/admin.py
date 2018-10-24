@@ -10,15 +10,37 @@ class AccountsAdmin(admin.ModelAdmin):
 
 
 class ReportAdmin(admin.ModelAdmin):
-    readonly_fields = ['sender', 'comment', 'reason', 'date']
-    list_display = ('sender', 'reason', 'comment', 'rating_link', 'date')
+    readonly_fields = ['sender', 'comment', 'reason', 'date', 'rating']
+    list_display = ('sender', 'reason', 'comment_text', 'rating_link', 'date', 'status')
 
     def rating_link(self, obj):
         link = reverse("admin:tizanegra_rating_change", args=[obj.comment.rating.pk])
-        return format_html('<a href="{}">View rating</a>', link)
+        return format_html('<a href="{}">View rating and comment</a>', link)
+
+    def rating(self, obj):
+        link = reverse("admin:tizanegra_rating_change", args=[obj.comment.rating.pk])
+        return format_html('<a href="{}">View Rating</a>', link)
+
+    def comment_text(self, obj):
+        return obj.comment.text
 
 
-class CommentInline(admin.StackedInline):
+class ReportInline(admin.TabularInline):
+    model = Report
+    readonly_fields = ['sender', 'reason', 'date']
+
+
+class CommentAdmin(admin.ModelAdmin):
+    readonly_fields = ['rating_link']
+    exclude = ['rating']
+    inlines = [ReportInline]
+
+    def rating_link(self, obj):
+        link = reverse("admin:tizanegra_rating_change", args=[obj.rating.pk])
+        return format_html('<a href="{}">View Rating</a>', link)
+
+
+class CommentInline(admin.TabularInline):
     model = Comment
 
 
@@ -34,5 +56,5 @@ admin.site.register(Subject)
 admin.site.register(Teacher)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(Rating, RatingAdmin)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)
 
