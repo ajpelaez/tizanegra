@@ -16,8 +16,18 @@ from .utils import subject_tags, teacher_tags
 
 
 def index(request):
+
+    teachers = Teacher.objects.all()
+    best_teachers = []
+
+    for i in range(0, 4):
+        teacher = max(teachers, key=lambda t: t.get_rating_score())
+        teachers = teachers.exclude(id=teacher.id)
+        best_teachers.append(teacher)
+
     context = {
         "universidades": University.objects.all(),
+        "best_teachers": best_teachers
     }
 
     return render(request, 'tizanegra/index.html', context)

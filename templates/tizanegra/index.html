@@ -86,12 +86,22 @@
             <p class="lead text-center">Estos son algunos de los profesores registrados en tizanegra con mejores valoraciones de estudiantes</p>
         </div>
 
+
         <div class="row">
+
+        {% for teacher in best_teachers %}
+
             <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
-                <div class="card border-dark mb-5">
-                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
+                <div class="card border-dark mb-5 best-teacher-card">
+                    <a href="{{ teacher.get_url }}">
+                        <img class="card-img-top" src="{{ teacher.photo }}" alt="Card image cap">
+                        <div class="teacher-info text-center px-2">
+                            <h2 class="text-dark">{{ teacher.name }}</h2>
+                            <h5 class="text-black-50">{{ teacher.university.acronym }}</h5>
+                        </div>
+                    </a>
                     <div class="card-footer py-1 mx-auto bg-white border-dark">
-                        <star-rating :inline="true" :increment="0.1" :star-size="25" :rating="5"
+                        <star-rating :inline="true" :increment="0.1" :star-size="25" :rating="{{ teacher.get_rating_score }}"
                         :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
                         :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
                         </star-rating>
@@ -99,41 +109,8 @@
                 </div>
             </div>
 
-            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
-                <div class="card border-dark mb-5">
-                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
-                    <div class="card-footer py-1 mx-auto bg-white border-dark">
-                        <star-rating :increment="0.1" :star-size="25" :rating="4.7"
-                        :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-                        :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                        </star-rating>
-                    </div>
-                </div>
-            </div>
+        {% endfor %}
 
-            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
-                <div class="card border-dark mb-5">
-                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
-                    <div class="card-footer py-1 mx-auto bg-white border-dark">
-                        <star-rating :increment="0.1" :star-size="25" :rating="4"
-                        :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-                        :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                        </star-rating>
-                    </div>
-                </div>
-            </div>
-
-            <div class="px-5 px-sm-3 col-sm-6 col-lg-3">
-                <div class="card border-dark mb-5">
-                    <img class="card-img-top" src="{% static "images/teacher2.png" %}" alt="Card image cap">
-                    <div class="card-footer py-1 mx-auto bg-white border-dark">
-                        <star-rating :increment="0.1" :star-size="25" :rating="4.5"
-                        :show-rating="false" :border-width="4" border-color="#d8d8d8" :rounded-corners="true"
-                        :read-only="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
-                        </star-rating>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

@@ -76,3 +76,27 @@ footer img:hover{
 .rating-form{
 }
 
+
+.best-teacher-card .teacher-info{
+    position:absolute;
+    top: 40px;
+    visibility: hidden;
+}
+
+.best-teacher-card:hover .teacher-info{
+    cursor: pointer;
+    visibility: visible;
+}
+
+.teacher-info h5{
+    position: relative;
+}
+
+
+.best-teacher-card:hover img{
+    opacity:0.2;
+    cursor: pointer;
+}
+
+
+
