@@ -1,3 +1,5 @@
+import random
+
 from django.db import models
 from django.contrib.auth.models import User
 from .utils import subject_tags, teacher_tags
@@ -73,15 +75,29 @@ class Subject(models.Model):
 
 
 class Teacher(models.Model):
+    GENDER = (
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+    )
     name = models.CharField(max_length=100)
     photo = models.ImageField(upload_to="static/teaching/", null=True, blank=True)
     subjects = models.ManyToManyField(Subject, blank=True)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     email = models.EmailField(max_length=200)
     website = models.CharField(max_length=200)
+    gender = models.CharField(max_length=6, choices=GENDER, default='MALE')
 
     def __str__(self):
         return self.name
+
+    def get_photo(self):
+        if self.photo:
+            return self.photo
+        else:
+            if self.gender == 'FEMALE':
+                return "static/images/teacher_female.png"
+            else:
+                return "static/images/teacher_male" + str(random.randint(1, 3)) + ".png"
 
     def get_nick(self):
         return str(self.email).split("@")[0]
