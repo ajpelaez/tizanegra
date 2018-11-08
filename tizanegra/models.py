@@ -194,14 +194,33 @@ class CommentScore(models.Model):
 
 
 class Student(models.Model):
+    GENDER = (
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     university = models.ForeignKey(University, on_delete=models.PROTECT, null=True)
     degree = models.ForeignKey(Degree, on_delete=models.PROTECT, null=True)
-    subjects = models.ManyToManyField(Subject, blank=True)
-    teachers = models.ManyToManyField(Teacher, blank=True)
+    photo = models.ImageField(upload_to="static/teaching/", null=True, blank=True)
+    gender = models.CharField(max_length=6, choices=GENDER, default='MALE')
 
     def __str__(self):
         return self.user.username
+
+    def get_photo(self):
+        if self.photo:
+            return self.photo
+        else:
+            if self.gender == 'FEMALE':
+                return "static/images/student_female.png"
+            else:
+                return "static/images/student_male.png"
+
+    def get_ratings_count(self):
+        return Rating.objects.filter(user=self.user).count()
+
+    def get_ratings(self):
+        return Rating.objects.filter(user=self.user)
 
 
 class Report(models.Model):

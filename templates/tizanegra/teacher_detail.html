@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="container-fluid ml-0 pl-0">
                         <img width="150px" src="/{{ teacher.get_photo }}" class="mr-2 rounded img-fluid float-sm-left img-thumbnail d-none d-sm-block">
-                        <img src="/{{ teacher.photo }}" class="mr-2 rounded img-fluid float-sm-left img-thumbnail d-sm-none">
+                        <img src="/{{ teacher.get_photo }}" class="mr-2 rounded img-fluid float-sm-left img-thumbnail d-sm-none">
                         <h5 class="card-title text-center text-sm-left mt-3 mt-sm-1">{{ teacher.name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted text-center text-sm-left">{{ teacher.university.acronym }} - {{ teacher.email }}</h6>
 
