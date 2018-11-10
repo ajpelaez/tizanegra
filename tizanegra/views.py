@@ -3,7 +3,6 @@ import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserSerializer
-from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from django.views import View
 from django.contrib.auth import login
@@ -40,7 +39,6 @@ class UserCreate(APIView):
             if serializer.is_valid():
                 student_profile = serializer.save()
                 if student_profile:
-                    token = Token.objects.create(user=student_profile.user)
                     login(request, student_profile.user)
                     return Response({'result': True})
         except Exception as e:
@@ -127,7 +125,8 @@ class TeacherDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tags'] = teacher_tags.keys
-        context['rated'] = TeacherRating.objects.filter(teacher=context['teacher'], user=self.request.user).exists()
+        if self.request.user.is_authenticated:
+            context['rated'] = TeacherRating.objects.filter(teacher=context['teacher'], user=self.request.user).exists()
         context['ratings'] = TeacherRating.objects.filter(teacher=context['teacher']).order_by('-date', '-pk')
         return context
 
@@ -178,7 +177,8 @@ class SubjectDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['degree'] = self.degree
         context['tags'] = subject_tags.keys
-        context['rated'] = SubjectRating.objects.filter(subject=context['subject'], user=self.request.user).exists()
+        if self.request.user.is_authenticated:
+            context['rated'] = SubjectRating.objects.filter(subject=context['subject'], user=self.request.user).exists()
         context['ratings'] = SubjectRating.objects.filter(subject=context['subject']).order_by('-date', '-pk')
         return context
 

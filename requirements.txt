@@ -1,4 +1,4 @@
-Django==2.1
+Django==2.1.2
 Pillow==5.2.0
 djangorestframework==3.8.2
 whitenoise==3.3.1
