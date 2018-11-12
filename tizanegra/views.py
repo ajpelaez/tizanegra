@@ -15,7 +15,6 @@ from .utils import subject_tags, teacher_tags
 
 
 def index(request):
-
     teachers = Teacher.objects.all()
     best_teachers = []
 
@@ -78,7 +77,6 @@ def check_email_is_valid(request, email):
 
 @api_view(['GET'])
 def get_teachers_and_subjects(request, name):
-
     teachers = Teacher.objects.filter(name__contains=name)
     subjects = Subject.objects.filter(name__contains=name)
     items = []
@@ -105,8 +103,11 @@ def get_teachers_and_subjects(request, name):
 class UserPanelView(View):
 
     def get(self, request):
-        context = {'test': 'hi'}
-        return render(request, 'registration/panel.html', context)
+        context = {
+            'teachers_ratings': TeacherRating.objects.all().order_by('-date', '-pk')[:3],
+            'subjects_ratings': SubjectRating.objects.all().order_by('-date', '-pk')[:3],
+        }
+        return render(request, 'tizanegra/user_panel.html', context)
 
 
 class TeacherDetailView(DetailView):
