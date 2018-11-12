@@ -2,7 +2,7 @@
 {% load static %}
 {% block main_content %}
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" id="user_panel">
     <div class="row">
         <div class="col-md-5 col-lg-4">
             <div class="card shadow mb-3">
@@ -18,10 +18,14 @@
             </div>
 
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">
+                <a href="#" class="list-group-item list-group-item-action" v-bind:class="{ active: section == 1 }"
+                v-on:click="change_section(1)">
                 Últimas valoraciones
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">Mis valoraciones</a>
+                <a href="#" class="list-group-item list-group-item-action" v-bind:class="{ active: section == 2 }"
+                   v-on:click="change_section(2)">
+                    Mis valoraciones
+                </a>
             </div>
 
             <div class="list-group mt-4">
@@ -37,7 +41,8 @@
             </div>
         </div>
 
-        <div class="col-md-7 col-lg-8" id="rating_app">
+        <div class="col-md-7 col-lg-8" v-if="section == 1">
+        <div id="rating_app">
 
         {% for rating in teachers_ratings %}
             <div class="card shadow mb-3">
@@ -151,6 +156,122 @@
         {% endfor %}
 
         </div>
+        </div>
+
+
+
+        <div class="col-md-7 col-lg-8" v-if="section == 2">
+        <div id="rating_app">
+
+        {% for rating in user_teachers_ratings %}
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <div class="float-left">
+                        <h5><a class="text-dark" href="{{ rating.teacher.get_url }}">{{ rating.teacher.name }}</a></h5>
+                        <img width="100px" src="/{{ rating.teacher.get_photo }}" class="mr-2 rounded img-fluid float-left img-thumbnail d-block">
+                        <star-rating :increment="0.1" :star-size="25" :rating="{{ rating.score }}" :show-rating="false"
+                         :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
+                         :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                        </star-rating>
+
+                        <span class="ml-1">
+                            {% if rating.anonymity %}<strong>Valoración anónima
+                            {% endif %}</strong>
+                        </span>
+                        <ul class="list-unstyled mt-1 mb-0 d-flex">
+                            <li class="badge badge-dark p-2 mt-1 mr-1">{{ rating.tag1 }}</li>
+                            <li class="badge badge-dark p-2 mt-1 mr-1">{{ rating.tag2 }}</li>
+                            <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
+                        </ul>
+                    </div>
+                    <div class="float-right">
+                        {{ rating.date }}
+                    </div>
+
+                </div>
+
+                {% if rating.comment.text %}
+                <div class="card-footer rating-comment">
+                    <p>{{ rating.comment.text }}</p>
+
+                    <button type="button" class="btn btn-success btn-sm font-weight-bold"
+                        v-on:click="addPositiveScore({{ rating.comment.pk }})">
+                        <i class="far fa-smile mr-1"></i>
+                        <span id="positive-counter-{{ rating.comment.pk }}">{{ rating.comment.positive_score }}</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm font-weight-bold"
+                        v-on:click="addNegativeScore({{ rating.comment.pk }})">
+                        <i class="far fa-frown mr-1"></i>
+                        <span id="negative-counter-{{ rating.comment.pk }}">{{ rating.comment.negative_score }}</span>
+                    </button>
+
+                    <button type="button" class="btn btn-outline-info btn-sm ml-2" data-toggle="modal"
+                        data-target="#reportingModal" data-comment-id="{{ rating.comment.pk }}">
+                        <i class="fas fa-exclamation-circle mr-1"></i>
+                        <span class="d-none d-sm-inline">Reportar comentario</span>
+                    </button>
+                </div>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+
+        {% for rating in user_subjects_ratings %}
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <div class="float-left">
+                        <h5><a class="text-dark" href="{{ rating.subject.get_url }}">{{ rating.subject.name }}</a></h5>
+                        <img width="100px" src="/{{ rating.subject.university.logo }}" class="mr-2 rounded img-fluid float-left img-thumbnail d-block">
+                        <star-rating :increment="0.1" :star-size="25" :rating="{{ rating.score }}" :show-rating="false"
+                         :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
+                         :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+                        </star-rating>
+
+                        <span class="ml-1">
+                            {% if rating.anonymity %}<strong>Valoración anónima
+                            {% endif %}</strong>
+                        </span>
+                        <ul class="list-unstyled mt-1 mb-0 d-flex">
+                            <li class="badge badge-dark p-2 mt-1 mr-1">{{ rating.tag1 }}</li>
+                            <li class="badge badge-dark p-2 mt-1 mr-1">{{ rating.tag2 }}</li>
+                            <li class="badge badge-dark p-2 mt-1">{{ rating.tag3 }}</li>
+                        </ul>
+                    </div>
+                    <div class="float-right">
+                        {{ rating.date }}
+                    </div>
+
+                </div>
+
+                {% if rating.comment.text %}
+                <div class="card-footer rating-comment">
+                    <p>{{ rating.comment.text }}</p>
+
+                    <button type="button" class="btn btn-success btn-sm font-weight-bold"
+                        v-on:click="addPositiveScore({{ rating.comment.pk }})">
+                        <i class="far fa-smile mr-1"></i>
+                        <span id="positive-counter-{{ rating.comment.pk }}">{{ rating.comment.positive_score }}</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm font-weight-bold"
+                        v-on:click="addNegativeScore({{ rating.comment.pk }})">
+                        <i class="far fa-frown mr-1"></i>
+                        <span id="negative-counter-{{ rating.comment.pk }}">{{ rating.comment.negative_score }}</span>
+                    </button>
+
+                    <button type="button" class="btn btn-outline-info btn-sm ml-2" data-toggle="modal"
+                        data-target="#reportingModal" data-comment-id="{{ rating.comment.pk }}">
+                        <i class="fas fa-exclamation-circle mr-1"></i>
+                        <span class="d-none d-sm-inline">Reportar comentario</span>
+                    </button>
+                </div>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+        </div>
+        </div>
 
 
 
@@ -159,5 +280,6 @@
 </div>
 
 <script src="{% static "style/js/rating_app.js" %}"></script>
+<script src="{% static "style/js/user_panel.js" %}"></script>
 
 {% endblock %}

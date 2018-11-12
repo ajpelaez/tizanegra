@@ -106,6 +106,8 @@ class UserPanelView(View):
         context = {
             'teachers_ratings': TeacherRating.objects.all().order_by('-date', '-pk')[:3],
             'subjects_ratings': SubjectRating.objects.all().order_by('-date', '-pk')[:3],
+            'user_teachers_ratings': TeacherRating.objects.filter(user=request.user).order_by('-date', '-pk')[:3],
+            'user_subjects_ratings': SubjectRating.objects.filter(user=request.user).order_by('-date', '-pk')[:3],
         }
         return render(request, 'tizanegra/user_panel.html', context)
 
