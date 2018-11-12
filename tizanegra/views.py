@@ -77,8 +77,8 @@ def check_email_is_valid(request, email):
 
 @api_view(['GET'])
 def get_teachers_and_subjects(request, name):
-    teachers = Teacher.objects.filter(name__contains=name)
-    subjects = Subject.objects.filter(name__contains=name)
+    teachers = Teacher.objects.filter(name__icontains=name)
+    subjects = Subject.objects.filter(name__icontains=name)
     items = []
 
     for teacher in teachers:
