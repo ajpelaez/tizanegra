@@ -34,7 +34,7 @@
             <div class="card shadow mb-3">
                 <div class="card-body">
                     <div class="float-left">
-                        <img width="50px" src="{% static "images/teacher-profile.jpg" %}" class="mr-2 rounded float-left img-fluid img-thumbnail">
+                        <img width="50px" src="/{{ rating.user.student.get_photo }}" class="mr-2 rounded float-left img-fluid img-thumbnail">
                         <star-rating :increment="0.1" :star-size="15" :rating="{{ rating.score }}" :show-rating="false"
                          :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :read-only="true"
                          :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
