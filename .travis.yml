@@ -24,4 +24,4 @@ before_script:
   - python manage.py makemigrations tizanegra
   - python manage.py migrate tizanegra
 script:
-  - cd tizanegra && python test.py
+  - python manage.py test
