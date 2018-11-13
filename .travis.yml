@@ -21,4 +21,4 @@ before_script:
   - mysql -e 'create database travis_ci_db;'
 
 script:
-  - python manage.py test
+  - cd tizanegra && python test
