@@ -28,14 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'guardian',
     'tizanegra',
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend',
-)
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
