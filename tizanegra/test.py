@@ -26,7 +26,7 @@ class AccountsTest(APITestCase):
     def test_when_user_is_created_then_there_are_2_users_in_the_database(self):
         self.url = reverse('signup')
         self.client.post(self.url, self.example_signup_data, format='json')
-        self.assertEqual(User.objects.count(), 2, "Debería haber 2 usuarios en la base de datos")
+        self.assertEqual(User.objects.count(), 3, "Debería haber 3 usuarios en la base de datos")
 
     def test_when_user_is_created_then_201_response_is_received(self):
         self.url = reverse('signup')

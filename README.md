@@ -38,6 +38,7 @@ gunicorn==19.9.0
 django-heroku
 dj-database-url
 psycopg2
+django-guardian
 ~~~~
 
 
