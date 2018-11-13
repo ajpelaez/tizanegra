@@ -8,7 +8,7 @@ from .utils import subject_tags, teacher_tags
 class University(models.Model):
     acronym = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to="static/", null=True, blank=True)
+    logo = models.ImageField(upload_to="static/universities_logos", null=True, blank=True)
     web = models.CharField(max_length=100)
     email_extension = models.CharField(max_length=100, null=True)
 
@@ -80,7 +80,7 @@ class Teacher(models.Model):
         ('FEMALE', 'Female'),
     )
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to="static/teaching/", null=True, blank=True)
+    photo = models.ImageField(upload_to="static/teachers_photos/", null=True, blank=True)
     subjects = models.ManyToManyField(Subject, blank=True)
     university = models.ForeignKey(University, on_delete=models.PROTECT)
     email = models.EmailField(max_length=200)
@@ -201,7 +201,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     university = models.ForeignKey(University, on_delete=models.PROTECT, null=True)
     degree = models.ForeignKey(Degree, on_delete=models.PROTECT, null=True)
-    photo = models.ImageField(upload_to="static/teaching/", null=True, blank=True)
+    photo = models.ImageField(upload_to="static/students_photos/", null=True, blank=True)
     gender = models.CharField(max_length=6, choices=GENDER, default='MALE')
 
     def __str__(self):
