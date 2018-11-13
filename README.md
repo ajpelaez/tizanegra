@@ -18,6 +18,15 @@ El objetivo fundamental es proporcionar información extra sobre asignaturas y d
 - Travis-CI como motor de integración continua
 - Heroku como proveedor PaaS para el despliegue de la plataforma en un entorno de pruebas
 
+
+![Bootstrap](http://ajpelaez.es/tizanegra/bootstrap.jpg)
+![VueJS](http://ajpelaez.es/tizanegra/vuejs.png)
+![Django](http://ajpelaez.es/tizanegra/django.png)
+![Travis-CI](http://ajpelaez.es/tizanegra/travis.png)
+![Heroku](http://ajpelaez.es/tizanegra/Heroku-logo.png)
+
+---
+
 ### Requisitos y dependencias:
 
 ~~~~
