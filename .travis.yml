@@ -2,7 +2,7 @@ language: python
 python:
   - "3.6.0"
 
-services: mysql
+services: postgresql
 
 env:
   global:
@@ -10,15 +10,13 @@ env:
     - PYTHONPATH="/home/travis/build/ajpelaez/tizanegra"
     - PIP_USE_MIRRORS=true
     - BUILD_ON_TRAVIS=true
-  matrix:
-    - DJANGO=2.1.2 DB=mysql
 
 install:
   - pip install mysqlclient
   - pip install -r requirements.txt
 
 before_script:
-  - mysql -e 'create database travis_ci_db;'
+  - psql -c 'create database travis_ci;' -U postgres
   - python manage.py makemigrations
   - python manage.py migrate
   - python manage.py makemigrations tizanegra

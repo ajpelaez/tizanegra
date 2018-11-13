@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'tizanegra.wsgi.application'
 if os.getenv('BUILD_ON_TRAVIS', None):
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'travis_ci_db',
-            'USER': 'travis',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'travis_ci',
+            'USER': 'postgres',
             'PASSWORD': '',
             'HOST': '127.0.0.1',
         }
