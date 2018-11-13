@@ -40,13 +40,19 @@ class UserCreate(APIView):
                 if student_profile:
                     login(request, student_profile.user)
                     return Response({'result': True})
-        except Exception as e:
-            exception = str(e)
+            else:
+                signup_errors = serializer.errors
+                signup_errors['result'] = False
+                signup_errors['message'] = \
+                    'Ha ocurrido un error con el registro, revisa todos tus datos e inténtalo de nuevo'
 
-        signup_errors = serializer.errors
-        signup_errors['result'] = False
-        signup_errors['exception'] = exception
-        signup_errors['message'] = 'Ha ocurrido un error con el registro, revisa todos tus datos e inténtalo de nuevo'
+        except Exception as exception:
+            signup_errors = {
+                'result': False,
+                'exception': str(exception),
+                'message': 'Ha ocurrido un error con el registro, revisa todos tus datos e inténtalo de nuevo'
+            }
+
         return Response(signup_errors)
 
 

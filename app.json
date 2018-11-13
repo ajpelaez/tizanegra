@@ -1,6 +1,6 @@
 {
   "name": "Teaching platform",
-  "description": "Web platform that allow university students to rate subjects and teachers as well as read other student’s ratings",
+  "description": "Web platform that allow university students to rate subjects and teachers as well as read other students ratings",
   "repository": "https://github.com/ajpelaez/tizanegra",
   "logo": "http://ajpelaez.es/tizanegra/logo_black.png",
   "keywords": ["python3", "django", "teaching", "university", "subjects", "vuejs"]

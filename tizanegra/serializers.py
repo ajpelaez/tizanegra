@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         university = University.objects.get(acronym=validated_data['university'])
-        degree = Degree.objects.get(acronym=validated_data['degree'])
+        degree = Degree.objects.get(acronym=validated_data['degree'], university=university)
         user = User.objects.create_user(validated_data['user']['username'],
                                         validated_data['user']['email'] + university.email_extension,
                                         validated_data['user']['password'])
