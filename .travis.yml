@@ -1,7 +1,24 @@
 language: python
 python:
   - "3.6.0"
+
+services: mysql
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE="tizanegra.settings"
+    - PYTHONPATH="/home/travis/build/ajpelaez/tizanegra"
+    - PIP_USE_MIRRORS=true
+    - BUILD_ON_TRAVIS=true
+  matrix:
+    - DJANGO=2.1.2 DB=mysql
+
 install:
   - pip install -r requirements.txt
+
+before_script:
+  - mysql -e 'create database travis_ci_db;'
+  - python manage.py syncdb --noinput
+
 script:
-  - make test
+  - python manage.py test
