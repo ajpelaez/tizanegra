@@ -40,7 +40,7 @@ body::after {
 
 .dark-background {
     color: white;
-    background: url(/static/images/simple-codelines.svg), #2b3137;
+    background: url(/static/images/simple-codelines.png), #2b3137;
     background-position: center 10%;
     background-size: cover;
 }
